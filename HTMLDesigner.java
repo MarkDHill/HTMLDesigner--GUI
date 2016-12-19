@@ -1,9 +1,6 @@
 import java.awt.Desktop;
 import java.awt.EventQueue;
-import java.awt.Frame;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import java.awt.TextArea;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,46 +8,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import java.awt.ScrollPane;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.SystemColor;
 import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.Point;
+
 
 public class HTMLDesigner extends JFrame {
 
-	JFrame frmWebPageBasics;
-	JMenuItem menuFinalize;
-	JButton HTMLButton;
-	TextArea ArrayDisplay;
-	JButton HeadButton;
-	JButton TitleButton;
-	JButton TitleSaveButton;
-	JButton BodyButton;
-	JButton FooterButton;
-	JButton FooterSaveButton;
+	JFrame frmWebPageBasics, frmWebgetLink, frmWebgetImg, contentPane;
+	JMenuItem menuFinalize, ResetPage;
+	JButton HTMLButton, HeadButton, TitleButton, TitleSaveButton, BodyButton, FooterButton, FooterSaveButton, h1Button,
+			h2Button, h3Button, h4Button, h5Button, h6Button, PButton, emButton, StrongButton, textEditSave,
+			DummySaveButton, BrButton, linkButton, imgButton, linkCancel, linkAdd, RandImg1, RandImg2, RandImg3,
+			RandImg4, RandImg5, RandImg6, saveImg, cancelImg, defaultSaveButton;
+	TextArea ArrayDisplay, MultiLineEntry;
 	JFileChooser FileChooser;
 	String ChooserTitle;
-	JButton h1Button;
-	JButton h2Button;
-	JButton h3Button;
-	JButton h4Button;
-	JButton PButton;
-	JButton emButton;
-	JButton StrongButton;
-	JButton DefaultSaveButton;
-	JButton DummySaveButton;
-	TextArea MultiLineEntry;
-	JTextArea TutConsole;
-	JButton BrButton;
-	JMenuItem ResetPage;
-	JButton h5Button;
-	JButton h6Button;
-	JButton linkButton;
-	JButton imgButton;
-
+	JTextArea TutConsole, linkAddy, linkName;
+	JLabel SelectedImg;
+	ImageIcon cakeImg, cityImg, puppyImg, carImg, lakeImg, travelImg, footerNImg;
 	private ArrayList<String> tagArray = new ArrayList<>();
 
 	/**
@@ -125,7 +101,7 @@ public class HTMLDesigner extends JFrame {
 		ArrayDisplay.setBackground(SystemColor.scrollbar);
 		ArrayDisplay.setEditable(false);
 		ArrayDisplay.setText("Page in Progress...");
-		ArrayDisplay.setBounds(981, 20, 153, 692);
+		ArrayDisplay.setBounds(991, 32, 153, 680);
 		frmWebPageBasics.getContentPane().add(ArrayDisplay);
 
 		HTMLButton = new JButton(new ImageIcon(
@@ -155,7 +131,6 @@ public class HTMLDesigner extends JFrame {
 		HeadButton.addActionListener(lforbuttons);
 		ImageIcon HeadImg = new ImageIcon("IMG/head.png");
 		ImageIcon HeadRImg = new ImageIcon("IMG/RHead.png");
-		ImageIcon HeadNImg = new ImageIcon("IMG/Nhead.png");
 		HeadButton.setIcon(HeadImg);
 		HeadButton.setDisabledIcon(HeadImg);
 		HeadButton.setRolloverIcon(HeadRImg);
@@ -171,7 +146,6 @@ public class HTMLDesigner extends JFrame {
 		BodyButton.addActionListener(lforbuttons);
 		ImageIcon BodyImg = new ImageIcon("IMG/body.png");
 		ImageIcon BodyRImg = new ImageIcon("IMG/RBody.png");
-		ImageIcon BodyNImg = new ImageIcon("IMG/Nbody.png");
 		BodyButton.setIcon(BodyImg);
 		BodyButton.setDisabledIcon(BodyImg);
 		BodyButton.setRolloverIcon(BodyRImg);
@@ -187,7 +161,6 @@ public class HTMLDesigner extends JFrame {
 		FooterButton.addActionListener(lforbuttons);
 		ImageIcon footerImg = new ImageIcon("IMG/footer.png");
 		ImageIcon footerRImg = new ImageIcon("IMG/Rfooter.png");
-		ImageIcon footerNImg = new ImageIcon("IMG/Nfooter.png");
 		FooterButton.setIcon(footerImg);
 		FooterButton.setDisabledIcon(footerImg);
 		FooterButton.setRolloverIcon(footerRImg);
@@ -198,7 +171,6 @@ public class HTMLDesigner extends JFrame {
 		TitleButton.setBorderPainted(false);
 		ImageIcon TitleImg = new ImageIcon("IMG/title.png");
 		ImageIcon TitleRImg = new ImageIcon("IMG/RTitle.png");
-		ImageIcon TitleNImg = new ImageIcon("IMG/NTitle.png");
 		TitleButton.setIcon(TitleImg);
 		TitleButton.setDisabledIcon(TitleImg);
 		TitleButton.setToolTipText("The <title> element specifies a title for the document");
@@ -211,7 +183,7 @@ public class HTMLDesigner extends JFrame {
 		MultiLineEntry.setBackground(UIManager.getColor("CheckBox.light"));
 		MultiLineEntry.setVisible(true);
 		MultiLineEntry.setEditable(false);
-		MultiLineEntry.setBounds(480, 552, 285, 150);
+		MultiLineEntry.setBounds(481, 543, 285, 150);
 		frmWebPageBasics.getContentPane().add(MultiLineEntry);
 
 		TitleSaveButton = new JButton(new ImageIcon(
@@ -221,7 +193,6 @@ public class HTMLDesigner extends JFrame {
 		TitleSaveButton.setBorderPainted(false);
 		ImageIcon TitleSaveImg = new ImageIcon("IMG/save.png");
 		ImageIcon TitleSaveRImg = new ImageIcon("IMG/RSave.png");
-		ImageIcon TitleSaveNImg = new ImageIcon("IMG/NSave.png");
 		TitleSaveButton.setIcon(TitleSaveImg);
 		TitleSaveButton.setDisabledIcon(TitleSaveImg);
 		TitleSaveButton.setVisible(false);
@@ -236,7 +207,6 @@ public class HTMLDesigner extends JFrame {
 		FooterSaveButton.setBorderPainted(false);
 		ImageIcon FooterSaveImg = new ImageIcon("IMG/save.png");
 		ImageIcon FooterSaveRImg = new ImageIcon("IMG/RSave.png");
-		ImageIcon FooterSaveNImg = new ImageIcon("IMG/NSave.png");
 		FooterSaveButton.setIcon(FooterSaveImg);
 		FooterSaveButton.setDisabledIcon(FooterSaveImg);
 		FooterSaveButton.setVisible(false);
@@ -244,29 +214,41 @@ public class HTMLDesigner extends JFrame {
 		FooterSaveButton.addActionListener(lforbuttons);
 		FooterSaveButton.setRolloverIcon(FooterSaveRImg);
 
-		DefaultSaveButton = new JButton(new ImageIcon(
+		textEditSave = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
-		DefaultSaveButton.setBounds(787, 640, 127, 27);
-		DefaultSaveButton.setOpaque(false);
-		DefaultSaveButton.setBorderPainted(false);
+		textEditSave.setBounds(787, 640, 127, 27);
+		textEditSave.setOpaque(false);
+		textEditSave.setBorderPainted(false);
 		ImageIcon DefaultSaveImg = new ImageIcon("IMG/save.png");
 		ImageIcon DefaultSaveRImg = new ImageIcon("IMG/RSave.png");
-		ImageIcon DefaultSaveNImg = new ImageIcon("IMG/NSave.png");
-		DefaultSaveButton.setIcon(DefaultSaveImg);
-		DefaultSaveButton.setDisabledIcon(DefaultSaveImg);
-		DefaultSaveButton.setVisible(false);
-		frmWebPageBasics.getContentPane().add(DefaultSaveButton);
-		DefaultSaveButton.addActionListener(lforbuttons);
-		DefaultSaveButton.setRolloverIcon(DefaultSaveRImg);
+		textEditSave.setIcon(DefaultSaveImg);
+		textEditSave.setDisabledIcon(DefaultSaveImg);
+		textEditSave.setVisible(false);
+		frmWebPageBasics.getContentPane().add(textEditSave);
+		textEditSave.addActionListener(lforbuttons);
+		textEditSave.setRolloverIcon(DefaultSaveRImg);
+		
+		defaultSaveButton = new JButton(new ImageIcon(
+				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
+		defaultSaveButton.setBounds(787, 640, 127, 27);
+		defaultSaveButton.setOpaque(false);
+		defaultSaveButton.setBorderPainted(false);
+		DefaultSaveImg = new ImageIcon("IMG/save.png");
+		DefaultSaveRImg = new ImageIcon("IMG/RSave.png");
+		defaultSaveButton.setIcon(DefaultSaveImg);
+		defaultSaveButton.setDisabledIcon(DefaultSaveImg);
+		defaultSaveButton.setVisible(false);
+		frmWebPageBasics.getContentPane().add(defaultSaveButton);
+		defaultSaveButton.addActionListener(lforbuttons);
+		defaultSaveButton.setRolloverIcon(DefaultSaveRImg);
 
 		DummySaveButton = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
 		DummySaveButton.setBounds(787, 640, 127, 27);
 		DummySaveButton.setOpaque(false);
 		DummySaveButton.setBorderPainted(false);
-		ImageIcon DummySaveImg = new ImageIcon("IMG/save.png");
+
 		ImageIcon DummySaveRImg = new ImageIcon("IMG/RSave.png");
-		ImageIcon DummySaveNImg = new ImageIcon("IMG/NSave.png");
 		DummySaveButton.setIcon(DefaultSaveImg);
 		DummySaveButton.setDisabledIcon(DefaultSaveImg);
 		DummySaveButton.setVisible(true);
@@ -461,7 +443,10 @@ public class HTMLDesigner extends JFrame {
 		TutConsole.setBackground(SystemColor.scrollbar);
 		TutConsole.setEditable(false);
 		TutConsole.setText(
-				"\r\n\r\n\r\nWelcome to the Web Design Basic: Brief Tutorial. To get started on your project hit the HTML button. This adds an <html> tag to your page. All HTML documents must start with a document type declaration: <!DOCTYPE html>.The HTML document itself begins with <html> and ends with </html>.");
+				"\r\n\r\n\r\n Welcome to your introduction to Web Page Basics tutorial! When you're ready to get started on your web page, please click the HTML button. This will add an <html> tag to your page,"
+				+ " which you will be able to view in the panel on the right side of your screen. It will also add a document type declaration: <!DOCTYPE html>, which is a required component for all HTML documents.\n"
+				+"\nThe HTML document itself begins with the <html> tag, and will end with the closing tag </html>."
+				+"\n\nTo CONTINUE, please click the HTML button and start your web page!");
 		TutConsole.setBounds(10, 32, 332, 680);
 		frmWebPageBasics.getContentPane().add(TutConsole);
 
@@ -470,6 +455,13 @@ public class HTMLDesigner extends JFrame {
 		frmWebPageBasics.getContentPane().add(BannerLab);
 		ImageIcon BannerImg = new ImageIcon("IMG/BannerTest-png.png");
 		BannerLab.setIcon(BannerImg);
+		
+		JLabel botLab = new JLabel(new ImageIcon(((new ImageIcon("IMG/button placeholder 550.png").getImage().getScaledInstance(600,
+				14, java.awt.Image.SCALE_SMOOTH)))));
+		botLab.setBounds(363, 699, 600, 14);
+		frmWebPageBasics.getContentPane().add(botLab);
+		ImageIcon botLabImg = new ImageIcon("IMG/button placeholder 550.png");
+		botLab.setIcon(botLabImg);
 
 	}
 
@@ -506,7 +498,7 @@ public class HTMLDesigner extends JFrame {
 						"\r\n\r\n\r\nGood job! You officially started your web page. Additional tags will be placed by pressing their corresponding buttons as we go through the tutorial."
 								+ "\n\n" + "The <head> element is a container for all the head elements."
 								+ " The <head> element can include a title for the document, scripts, styles, meta information, and more."
-								+ "\n\n For now we will add just a title. Continue by placing your Head tag");
+								+ "\n\n For now we will add just a title. \n\n CONTINUE by placing your Head tag");
 				ImageIcon HeadNImg = new ImageIcon("IMG/Nhead.png");
 				HeadButton.setIcon(HeadNImg);
 			}
@@ -517,13 +509,14 @@ public class HTMLDesigner extends JFrame {
 				TitleButton.setEnabled(true);
 				TitleButton.setVisible(true);
 				TutConsole.setText(
-						"\r\n\r\n\r\nYou can see on the far right pane that when you add tags to your website that it encloses them with < and >. These brackets are needed to close tags for your web page to be interpreted by a browser. \n\n Continue by adding a title tag to your page by typing in the textbox and saving your progress");
+						"\r\n\r\n\r\nYou can see on the far right pane that when you add tags to your website that it encloses them with < and >. These brackets are needed to close tags for your web page to be interpreted by a browser. \n\n CONTINUE by adding a title tag to your page by typing in the textbox and saving your progress");
 				ImageIcon TitleNImg = new ImageIcon("IMG/NTitle.png");
 				TitleButton.setIcon(TitleNImg);
 			}
 			if (e.getSource() == TitleButton) {
 				tagArray.add("<TITLE>");
 				ArrayDisplay.append("\n" + "<title>");
+				TutConsole.setText("\n\nTo CONTINUE please click the Save button after entering your title");
 				TitleButton.setEnabled(false);
 				TitleButton.setEnabled(false);
 				TitleButton.setVisible(false);
@@ -539,6 +532,7 @@ public class HTMLDesigner extends JFrame {
 				ArrayDisplay.append("\n" + userInput);
 				ArrayDisplay.append("\n" + "</title>");
 				ArrayDisplay.append("\n" + "</head>");
+				TutConsole.setText("\n\nTo CONTINUE please click the Body button");
 				tagArray.add(userInput);
 				tagArray.add("</title>");
 				tagArray.add("</head>");
@@ -555,20 +549,26 @@ public class HTMLDesigner extends JFrame {
 			if (e.getSource() == BodyButton) {
 				tagArray.add("<body>");
 				ArrayDisplay.append("\n" + "<body>");
+				TutConsole
+						.setText("\n\n\n Add body tags and text here \n\n To CONTINUE please click the Footer button");
 				BodyButton.setEnabled(false);
 				FooterButton.setEnabled(true);
 				textEditTrue();
-				ImageIcon footerNImg = new ImageIcon("IMG/Nfooter.png");
+				footerNImg = new ImageIcon("IMG/Nfooter.png");
 				FooterButton.setIcon(footerNImg);
 				imgButton.setVisible(true);
 				linkButton.setVisible(true);
-
+				MultiLineEntry.setEditable(true);
+				DummySaveButton.setVisible(false);
+				defaultSaveButton.setVisible(true);
 			}
 			if (e.getSource() == FooterButton) {
 				tagArray.add("</body>");
 				ArrayDisplay.append("\n" + "</body>");
 				tagArray.add("<footer>");
 				ArrayDisplay.append("\n" + "<footer>");
+				TutConsole.setText(
+						"\n\n\n Add Add footer page information here. \n\n To CONTINUE please click the Save button");
 				FooterButton.setEnabled(false);
 				MultiLineEntry.setEditable(true);
 				FooterSaveButton.setVisible(true);
@@ -585,6 +585,8 @@ public class HTMLDesigner extends JFrame {
 				ArrayDisplay.append("\n" + userInput);
 				ArrayDisplay.append("\n" + "</footer>");
 				ArrayDisplay.append("\n" + "</html>");
+				TutConsole.setText(
+						"\n\n\n Your basic page is finished. You can add advanced options like CSS styling or CONTINUE by choosing finish and finalize from the menu above");
 				tagArray.add(userInput);
 				tagArray.add("</footer>");
 				tagArray.add("</html>");
@@ -593,23 +595,30 @@ public class HTMLDesigner extends JFrame {
 				MultiLineEntry.setEditable(false);
 				FooterSaveButton.setVisible(false);
 				DummySaveButton.setVisible(true);
+				if (frmWebgetLink.isVisible()) {
+					frmWebgetLink.setVisible(false);
+					linkAddy.setText("");
+					linkName.setText("");
+				}
 			}
 			if (e.getSource() == PButton) {
 				ArrayDisplay.append("\n" + "<p>");
 				tagArray.add("<p>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
-
+				emButton.setVisible(true);
+				StrongButton.setVisible(true);
+				
 			}
-			if (e.getSource() == DefaultSaveButton) {
+			if (e.getSource() == textEditSave) {
 				String userInput = MultiLineEntry.getText();
 				ArrayDisplay.append("\n" + userInput);
 				tagArray.add(userInput);
 				MultiLineEntry.setText("");
 				MultiLineEntry.setEditable(false);
-				DefaultSaveButton.setVisible(false);
+				textEditSave.setVisible(false);
 				String findLastTag = tagArray.get(tagArray.size() - 2);
 				StringBuilder sb = new StringBuilder(findLastTag).insert(1, '/');
 				String exitTag = sb.toString();
@@ -618,12 +627,29 @@ public class HTMLDesigner extends JFrame {
 				FooterButton.setEnabled(true);
 				DummySaveButton.setVisible(true);
 				textEditTrue();
+				String	findpTag = tagArray.get(tagArray.size() - 4);
+				if (findpTag.equalsIgnoreCase("<p>")) {
+					ArrayDisplay.append("\n</p>");
+					tagArray.add("</p>");
+				}
+				if (FooterButton.getIcon() == footerNImg) {
+					MultiLineEntry.setEditable(true);
+				}
+				
+			}
+			if (e.getSource() == defaultSaveButton) {
+				String userInput = MultiLineEntry.getText();
+				ArrayDisplay.append("\n" + userInput);
+				tagArray.add(userInput);
+				MultiLineEntry.setText("");
+				FooterButton.setEnabled(true);
+				textEditTrue();
 			}
 			if (e.getSource() == h1Button) {
 				ArrayDisplay.append("\n" + "<h1>");
 				tagArray.add("<h1>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				FooterButton.setEnabled(false);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
@@ -632,7 +658,7 @@ public class HTMLDesigner extends JFrame {
 				ArrayDisplay.append("\n" + "<h2>");
 				tagArray.add("<h2>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				FooterButton.setEnabled(false);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
@@ -641,7 +667,7 @@ public class HTMLDesigner extends JFrame {
 				ArrayDisplay.append("\n" + "<h3>");
 				tagArray.add("<h3>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				FooterButton.setEnabled(false);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
@@ -650,7 +676,7 @@ public class HTMLDesigner extends JFrame {
 				ArrayDisplay.append("\n" + "<h4>");
 				tagArray.add("<h4>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				FooterButton.setEnabled(false);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
@@ -659,7 +685,7 @@ public class HTMLDesigner extends JFrame {
 				ArrayDisplay.append("\n" + "<h5>");
 				tagArray.add("<h5>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				FooterButton.setEnabled(false);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
@@ -668,7 +694,7 @@ public class HTMLDesigner extends JFrame {
 				ArrayDisplay.append("\n" + "<h6>");
 				tagArray.add("<h6>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				FooterButton.setEnabled(false);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
@@ -677,16 +703,17 @@ public class HTMLDesigner extends JFrame {
 				ArrayDisplay.append("\n" + "<em>");
 				tagArray.add("<em>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				FooterButton.setEnabled(false);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
+			
 			}
 			if (e.getSource() == StrongButton) {
 				ArrayDisplay.append("\n" + "<strong>");
 				tagArray.add("<strong>");
 				MultiLineEntry.setEditable(true);
-				DefaultSaveButton.setVisible(true);
+				textEditSave.setVisible(true);
 				FooterButton.setEnabled(false);
 				DummySaveButton.setVisible(false);
 				textEditFalse();
@@ -697,40 +724,301 @@ public class HTMLDesigner extends JFrame {
 			}
 
 			if (e.getSource() == ResetPage) {
-
 				resetPage();
 			}
-	/*		if (e.getSource() == imgButton) {
+			if (e.getSource() == imgButton) {
+				getImage(tagArray);
 
-				
-				 * imgPicked = ArrayDisplay.append("\n" + "<img src="+ imgPicked
-				 * + ">"); tagArray.add("<img src=" + imgPicked + ".gif>");
-				 
+			}
+			if (e.getSource() == linkCancel) {
 
-				// textEditFalse();
+				frmWebgetLink.setVisible(false);
+				linkAddy.setText("");
+				linkName.setText("");
+			}
+			if (e.getSource() == linkAdd) {
+				String userLinkAddy = linkAddy.getText();
+				String userLinkName = linkName.getText();
+				tagArray.add("<a href=\"http://" + userLinkAddy + "\">" + userLinkName + "</a><br>");
+				ArrayDisplay.append("\n <a href=\"http://" + userLinkAddy + "\">" + userLinkName + "</a>");
+				frmWebgetLink.setVisible(false);
+				linkAddy.setText("");
+				linkName.setText("");
 			}
 			if (e.getSource() == linkButton) {
-				String userInputLink = MultiLineEntry.getText();
-				String userLinkText = MultiLineEntry.getText();
-				ArrayDisplay.append("\n" + "<a href=" + userInputLink + ">" + userLinkText + "</a>");
-				tagArray.add("<a href=" + userInputLink + ">" + userLinkText + "</a>");
+				getLink(tagArray);
+			}
+			if (e.getSource() == RandImg1) {
+				cakeImg = new ImageIcon("IMG/SImages/cake.jpg");
+				SelectedImg.setIcon(cakeImg);
+			}
+			if (e.getSource() == RandImg2) {
+				carImg = new ImageIcon("IMG/SImages/car.jpg");
+				SelectedImg.setIcon(carImg);
+			}
+			if (e.getSource() == RandImg3) {
+				lakeImg = new ImageIcon("IMG/SImages/lake.jpg");
+				SelectedImg.setIcon(lakeImg);
+			}
+			if (e.getSource() == RandImg4) {
+				puppyImg = new ImageIcon("IMG/SImages/puppy.jpeg");
+				SelectedImg.setIcon(puppyImg);
+			}
+			if (e.getSource() == RandImg5) {
+				travelImg = new ImageIcon("IMG/SImages/travel.jpg");
+				SelectedImg.setIcon(travelImg);
+			}
+			if (e.getSource() == RandImg6) {
+				cityImg = new ImageIcon("IMG/SImages/city.jpg");
+				SelectedImg.setIcon(cityImg);
+			}
+			if (e.getSource() == cancelImg) {
+				frmWebgetImg.setVisible(false);
 
-			}*/
+			}
+			if (e.getSource() == saveImg) {
+				frmWebgetImg.setVisible(false);
+
+				if (SelectedImg.getIcon() == null) {
+					JOptionPane.showMessageDialog(null,
+							String.format(
+									"You have not selected an image to add yet! Please use cancel if you do not wish to add an image.",
+									e.getActionCommand()));
+					frmWebgetImg.setVisible(true);
+				}
+		
+				if (SelectedImg.getIcon() == cakeImg) {
+					tagArray.add("<img src=\"IMG/SImages/cake.jpg\"><br>");
+					ArrayDisplay.append("\n <img src=\"IMG/SImages/cake.jpg\">\n<br>");
+					}
+				if (SelectedImg.getIcon() ==carImg) {
+					tagArray.add("<img src=\"IMG/SImages/car.jpg\"><br>");
+					ArrayDisplay.append("\n <img src=\"IMG/SImages/car.jpg\">\n<br>");
+					}
+				if (SelectedImg.getIcon() ==cityImg) {
+					tagArray.add("<img src=\"IMG/SImages/city.jpg\"><br>");
+					ArrayDisplay.append("\n <img src=\"IMG/SImages/city.jpg\">\n<br>");
+					}
+				if (SelectedImg.getIcon() ==puppyImg) {
+					tagArray.add("<img src=\"IMG/SImages/puppy.jpeg\"><br>");
+					ArrayDisplay.append("\n <img src=\"IMG/SImages/puppy.jpeg\">\n<br>");
+					}
+				if (SelectedImg.getIcon() ==travelImg) {
+					tagArray.add("<img src=\"IMG/SImages/travel.jpg\"><br>");
+					ArrayDisplay.append("\n <img src=\"IMG/SImages/travel.jpg\">\n<br>");
+					}
+				if (SelectedImg.getIcon() ==lakeImg) {
+					tagArray.add("<img src=\"IMG/SImages/lake.jpg\"><br>");
+					ArrayDisplay.append("\n <img src=\"IMG/SImages/lake.jpg\">\n<br>");
+					}
+			}
 		}
+
+	}
+
+	private void getImage(ArrayList<String> tagArray) {
+
+		frmWebgetImg = new JFrame();
+		frmWebgetImg.setResizable(false);
+		frmWebgetImg.getContentPane().setBackground(SystemColor.activeCaptionBorder);
+		frmWebgetImg.setTitle("Adding Links");
+		frmWebgetImg.setBounds(100, 100, 600, 600);
+		frmWebgetImg.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frmWebgetImg.getContentPane().setLayout(null);
+		frmWebgetImg.setVisible(true);
+		ListenForButton lforbuttons = new ListenForButton();
+
+		RandImg1 = new JButton(new ImageIcon(((new ImageIcon("IMG/SImages/tcake.jpg").getImage().getScaledInstance(90,
+				90, java.awt.Image.SCALE_SMOOTH)))));
+		RandImg1.setBorderPainted(false);
+		RandImg1.setBounds(494, 265, 90, 90);
+		frmWebgetImg.getContentPane().add(RandImg1);
+		RandImg1.addActionListener(lforbuttons);
+		RandImg1.setOpaque(false);
+		RandImg1.setBorderPainted(false);
+
+		RandImg2 = new JButton(new ImageIcon(((new ImageIcon("IMG/SImages/tcar.jpg").getImage().getScaledInstance(90,
+				90, java.awt.Image.SCALE_SMOOTH)))));
+		RandImg2.setBorderPainted(false);
+		RandImg2.setBounds(494, 365, 90, 90);
+		frmWebgetImg.getContentPane().add(RandImg2);
+		RandImg2.addActionListener(lforbuttons);
+		RandImg2.setOpaque(false);
+		RandImg2.setBorderPainted(false);
+
+		RandImg3 = new JButton(new ImageIcon(((new ImageIcon("IMG/SImages/tlake.jpg").getImage().getScaledInstance(90,
+				90, java.awt.Image.SCALE_SMOOTH)))));
+		RandImg3.setBorderPainted(false);
+		RandImg3.setBounds(494, 466, 90, 90);
+		frmWebgetImg.getContentPane().add(RandImg3);
+		RandImg3.addActionListener(lforbuttons);
+		RandImg3.setOpaque(false);
+		RandImg3.setBorderPainted(false);
+
+		RandImg4 = new JButton(new ImageIcon(((new ImageIcon("IMG/SImages/tpuppy.jpeg").getImage().getScaledInstance(90,
+				90, java.awt.Image.SCALE_SMOOTH)))));
+		RandImg4.setBorderPainted(false);
+		RandImg4.setBounds(0, 265, 90, 90);
+		frmWebgetImg.getContentPane().add(RandImg4);
+		RandImg4.addActionListener(lforbuttons);
+		RandImg4.setOpaque(false);
+		RandImg4.setBorderPainted(false);
+
+		RandImg5 = new JButton(new ImageIcon(((new ImageIcon("IMG/SImages/ttravel.jpg").getImage().getScaledInstance(90,
+				90, java.awt.Image.SCALE_SMOOTH)))));
+		RandImg5.setBorderPainted(false);
+		RandImg5.setBounds(0, 365, 90, 90);
+		frmWebgetImg.getContentPane().add(RandImg5);
+		RandImg5.addActionListener(lforbuttons);
+		RandImg5.setOpaque(false);
+		RandImg5.setBorderPainted(false);
+
+		SelectedImg = new JLabel("");
+		SelectedImg.setBounds(100, 111, 384, 392);
+		frmWebgetImg.getContentPane().add(SelectedImg);
+
+		saveImg = new JButton(new ImageIcon(
+				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
+		saveImg.setBounds(143, 514, 127, 27);
+		frmWebgetImg.getContentPane().add(saveImg);
+		ImageIcon imgImg = new ImageIcon("IMG/save.png");
+		ImageIcon imgRImg = new ImageIcon("IMG/Rsave.png");
+		saveImg.setRolloverIcon(imgRImg);
+		saveImg.setIcon(imgImg);
+		saveImg.setDisabledIcon(imgImg);
+		saveImg.setToolTipText("Cancel adding link");
+		saveImg.setVisible(true);
+		saveImg.addActionListener(lforbuttons);
+		saveImg.setOpaque(false);
+		saveImg.setBorderPainted(false);
+
+		cancelImg = new JButton(new ImageIcon(((new ImageIcon("IMG/button_cancel passive.png").getImage()
+				.getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
+		cancelImg.setBounds(319, 514, 127, 27);
+		frmWebgetImg.getContentPane().add(cancelImg);
+		ImageIcon imgCancel = new ImageIcon("IMG/button_cancel passive.png");
+		ImageIcon imgRCancel = new ImageIcon("IMG/button_cancel rollover.png");
+		cancelImg.setRolloverIcon(imgRCancel);
+		cancelImg.setIcon(imgCancel);
+		cancelImg.setDisabledIcon(imgCancel);
+		cancelImg.setToolTipText("Cancel adding link");
+		cancelImg.setVisible(true);
+		cancelImg.addActionListener(lforbuttons);
+		cancelImg.setOpaque(false);
+		cancelImg.setBorderPainted(false);
+
+		RandImg6 = new JButton(new ImageIcon(((new ImageIcon("IMG/SImages/tcity.jpg").getImage().getScaledInstance(90,
+				90, java.awt.Image.SCALE_SMOOTH)))));
+		RandImg6.setBounds(0, 466, 90, 90);
+		frmWebgetImg.getContentPane().add(RandImg6);
+		RandImg6.addActionListener(lforbuttons);
+		RandImg6.setOpaque(false);
+		RandImg6.setBorderPainted(false);
+		
+		JLabel lBar = new JLabel(new ImageIcon(((new ImageIcon("IMG/lBar.png").getImage().getScaledInstance(580,
+				5, java.awt.Image.SCALE_SMOOTH)))));
+		lBar.setBounds(5, 560, 580, 5);
+		frmWebgetImg.getContentPane().add(lBar);
+		ImageIcon sBarImg = new ImageIcon("IMG/lBar.png");
+		lBar.setIcon(sBarImg);
+		
+		JLabel addImageBanner = new JLabel(new ImageIcon(((new ImageIcon("IMG/addImageBanner.png").getImage().getScaledInstance(600,
+				80, java.awt.Image.SCALE_SMOOTH)))));
+		addImageBanner.setBounds(0,5, 600, 80);
+		frmWebgetImg.getContentPane().add(addImageBanner);
+		ImageIcon addImageImg = new ImageIcon("IMG/addImageBanner.png");
+		addImageBanner.setIcon(addImageImg);
+		
+
+
+	}
+
+	private void getLink(ArrayList<String> tagArray) {
+
+		frmWebgetLink = new JFrame();
+		frmWebgetLink.setResizable(false);
+		frmWebgetLink.getContentPane().setBackground(SystemColor.activeCaptionBorder);
+		frmWebgetLink.setTitle("Adding Links");
+		frmWebgetLink.setBounds(100, 100, 400, 400);
+		frmWebgetLink.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frmWebgetLink.getContentPane().setLayout(null);
+		frmWebgetLink.setVisible(true);
+		ListenForButton lforbuttons = new ListenForButton();
+
+		linkAddy = new JTextArea();
+		linkAddy.setEditable(true);
+		linkAddy.setVisible(true);
+		linkAddy.setBounds(100, 180, 180, 20);
+		frmWebgetLink.getContentPane().add(linkAddy);
+
+		linkName = new JTextArea();
+		linkName.setEditable(true);
+		linkName.setVisible(true);
+		linkName.setBounds(100, 250, 180, 20);
+		frmWebgetLink.getContentPane().add(linkName);
+
+		linkAdd = new JButton(new ImageIcon(
+				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
+		linkAdd.setBounds(50, 300, 127, 27);
+		linkAdd.setOpaque(false);
+		linkAdd.setBorderPainted(false);
+		ImageIcon DefaultSaveImg = new ImageIcon("IMG/save.png");
+		ImageIcon DefaultSaveRImg = new ImageIcon("IMG/RSave.png");
+		linkAdd.setRolloverIcon(DefaultSaveRImg);
+		linkAdd.setIcon(DefaultSaveImg);
+		linkAdd.setDisabledIcon(DefaultSaveImg);
+		linkAdd.setToolTipText("Adds link to specified address local or WWW");
+		linkAdd.setVisible(true);
+		frmWebgetLink.getContentPane().add(linkAdd);
+		linkAdd.addActionListener(lforbuttons);
+		linkAdd.setOpaque(false);
+		linkAdd.setBorderPainted(false);
+
+		linkCancel = new JButton(new ImageIcon(((new ImageIcon("IMG/button_cancel passive.png").getImage()
+				.getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
+		linkCancel.setBounds(200, 300, 127, 27);
+		linkCancel.setOpaque(false);
+		linkCancel.setBorderPainted(false);
+		ImageIcon CancelImg = new ImageIcon("IMG/button_cancel passive.png");
+		ImageIcon CancelRImg = new ImageIcon("IMG/button_cancel rollover.png");
+		linkCancel.setRolloverIcon(CancelRImg);
+		linkCancel.setIcon(CancelImg);
+		linkCancel.setDisabledIcon(CancelImg);
+		linkCancel.setToolTipText("Cancel adding link");
+		linkCancel.setVisible(true);
+		frmWebgetLink.getContentPane().add(linkCancel);
+		linkCancel.addActionListener(lforbuttons);
+		linkCancel.setOpaque(false);
+		linkCancel.setBorderPainted(false);
+		
+		JLabel sBar = new JLabel(new ImageIcon(((new ImageIcon("IMG/sBar.png").getImage().getScaledInstance(380,
+				5, java.awt.Image.SCALE_SMOOTH)))));
+		sBar.setBounds(5, 360, 380, 5);
+		frmWebgetLink.getContentPane().add(sBar);
+		ImageIcon sBarImg = new ImageIcon("IMG/sBar.png");
+		sBar.setIcon(sBarImg);
+		
+		JLabel addLink = new JLabel(new ImageIcon(((new ImageIcon("IMG/addLink.png").getImage().getScaledInstance(400,
+				60, java.awt.Image.SCALE_SMOOTH)))));
+		addLink.setBounds(0,10, 400, 60);
+		frmWebgetLink.getContentPane().add(addLink);
+		ImageIcon addLinkImg = new ImageIcon("IMG/addLink.png");
+		addLink.setIcon(addLinkImg);
+
+
 	}
 
 	private void FinishPage() {
-		
+
 		FileChooser = new JFileChooser();
 		FileChooser.setCurrentDirectory(new java.io.File("\\"));
 		FileChooser.setAcceptAllFileFilterUsed(false);
 
-		
 		if (FileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 
 			FileWriter writer = null;
 			try {
-				writer = new FileWriter(FileChooser.getSelectedFile()+ ".html");
+				writer = new FileWriter(FileChooser.getSelectedFile() + ".html");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -796,9 +1084,10 @@ public class HTMLDesigner extends JFrame {
 		int n = JOptionPane.showConfirmDialog(temporaryLostComponent, "Would you like to reset your current page?",
 				"ALERT", JOptionPane.YES_NO_OPTION);
 		if (n == JOptionPane.YES_OPTION) {
-
-			for (int i = 0; i < tagArray.size(); i++) {
-				tagArray.remove(i);
+			if (!tagArray.isEmpty()) {
+				for (int i = 0; i < tagArray.size(); i++) {
+					tagArray.remove(i);
+				}
 			}
 
 			textEditFalse();
@@ -810,13 +1099,20 @@ public class HTMLDesigner extends JFrame {
 			FooterSaveButton.setVisible(false);
 			TitleSaveButton.setVisible(false);
 			DummySaveButton.setVisible(true);
-			DefaultSaveButton.setVisible(false);
+			textEditSave.setVisible(false);
 			MultiLineEntry.setText("");
 			MultiLineEntry.setEditable(false);
 			TutConsole.setText(
-					"\r\n\r\n\r\nWelcome to the Web Design Basic: Brief Tutorial. To get started on your project hit the HTML button. This adds an <html> tag to your page. All HTML documents must start with a document type declaration: <!DOCTYPE html>.The HTML document itself begins with <html> and ends with </html>.");
+					"\r\n\r\n\r\n Welcome to your introduction to Web Page Basics tutorial! When you're ready to get started on your web page, please click the HTML button. This will add an <html> tag to your page,"
+							+ " which you will be able to view in the panel on the right side of your screen. It will also add a document type declaration: <!DOCTYPE html>, which is a required component for all HTML documents.\n"
+							+"\nThe HTML document itself begins with the <html> tag, and will end with the closing tag </html>."
+							+"\n\nTo CONTINUE, please click the HTML button and start your web page!");
 			TitleButton.setVisible(false);
-
+			if (frmWebgetLink.isVisible()) {
+				frmWebgetLink.setVisible(false);
+				linkAddy.setText("");
+				linkName.setText("");
+			}
 		} else if (n == JOptionPane.NO_OPTION) {
 
 		} else {
@@ -825,5 +1121,4 @@ public class HTMLDesigner extends JFrame {
 		return false;
 
 	}
-
 }
