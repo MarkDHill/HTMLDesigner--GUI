@@ -29,32 +29,31 @@ import javax.swing.UIManager;
 public class Init extends JFrame {
 
 	JFrame frmWebPageBasics;
-	JFrame frmWebgetLink;
+	static JFrame frmWebgetLink;
 	JFrame frmWebgetImg;
 	JFrame frmWebgetList;
-	JMenuItem menuFinalize;
-	JMenuItem ResetPage;
-	JButton HTMLButton;
-	JButton HeadButton;
-	JButton TitleButton;
-	JButton TitleSaveButton;
-	JButton BodyButton;
-	JButton FooterButton;
-	JButton FooterSaveButton;
-	JButton h1Button;
-	JButton h2Button;
-	JButton h3Button;
-	JButton h4Button;
-	JButton h5Button;
-	JButton h6Button;
-	JButton PButton;
-	JButton emButton;
-	JButton StrongButton;
-	JButton textEditSave;
-	JButton DummySaveButton;
-	JButton BrButton;
-	JButton linkButton;
-	JButton imgButton;
+	JMenuItem menuFinalize, ResetPage;
+	static JButton HTMLButton;
+	static JButton HeadButton;
+	static JButton TitleButton;
+	static JButton TitleSaveButton;
+	static JButton BodyButton;
+	static JButton FooterButton;
+	static JButton FooterSaveButton;
+	static JButton h1Button;
+	static JButton h2Button;
+	static JButton h3Button;
+	static JButton h4Button;
+	static JButton h5Button;
+	static JButton h6Button;
+	static JButton PButton;
+	static JButton emButton;
+	static JButton StrongButton;
+	static JButton textEditSave;
+	static JButton DummySaveButton;
+	static JButton BrButton;
+	static JButton linkButton;
+	static JButton imgButton;
 	JButton linkCancel;
 	JButton linkAdd;
 	JButton RandImg1;
@@ -65,28 +64,29 @@ public class Init extends JFrame {
 	JButton RandImg6;
 	JButton saveImg;
 	JButton cancelImg;
-	JButton defaultSaveButton;
+	static JButton defaultSaveButton;
 	JButton listSave;
 	JButton listCancel;
-	JButton listButton;
-	TextArea ArrayDisplay;
-	TextArea MultiLineEntry;
+	static JButton listButton;
+	static TextArea ArrayDisplay;
+	static TextArea MultiLineEntry;
 	JFileChooser FileChooser;
 	String ChooserTitle;
-	JTextArea TutConsole;
-	JTextArea linkAddy;
-	JTextArea linkName;
+	static JTextArea TutConsole;
+	static JTextArea linkAddy;
+	static JTextArea linkName;
 	JLabel SelectedImg;
-	ImageIcon cakeImg, cityImg, puppyImg, carImg, lakeImg, travelImg, footerNImg;
+	ImageIcon cakeImg, cityImg, puppyImg, carImg, lakeImg, travelImg;
+	static ImageIcon footerNImg;
 	JTextField Li1, Li2, Li3, Li4, Li5, Li6;
 	JRadioButton OrderedLi, UnOrderedLi;
 	JComboBox liNum;
 	String liNumVal = null;
-	HTMLDesigner htmld;
+	HTMLDesignerApp htmld;
 
 	static ArrayList<String> tagArray = new ArrayList<>();
 
-	void textEditTrue() {
+	static void textEditTrue() {
 
 		h1Button.setVisible(true);
 		h2Button.setVisible(true);
@@ -100,7 +100,7 @@ public class Init extends JFrame {
 		BrButton.setVisible(true);
 	}
 
-	void textEditFalse() {
+	static void textEditFalse() {
 		h1Button.setVisible(false);
 		h2Button.setVisible(false);
 		h3Button.setVisible(false);
@@ -272,6 +272,10 @@ public class Init extends JFrame {
 			TitleSaveButton.setVisible(false);
 			DummySaveButton.setVisible(true);
 			textEditSave.setVisible(false);
+			imgButton.setVisible(false);
+			linkButton.setVisible(false);
+			defaultSaveButton.setVisible(false);
+			listButton.setVisible(false);
 			MultiLineEntry.setText("");
 			MultiLineEntry.setEditable(false);
 			TutConsole.setText(
@@ -658,13 +662,13 @@ public class Init extends JFrame {
 
 	}
 
-	public void initialize(HTMLDesigner inputhtmld) {
+	public void initialize(HTMLDesignerApp inputhtmld) {
 
 		ListenForButton lforbuttons = new ListenForButton();
 		initJFrames();
 		initMenu(lforbuttons);
 		initButtons(lforbuttons);
-		
+
 		ArrayDisplay = new TextArea();
 		ArrayDisplay.setBackground(SystemColor.scrollbar);
 		ArrayDisplay.setEditable(false);
@@ -698,7 +702,7 @@ public class Init extends JFrame {
 		frmWebPageBasics.getContentPane().add(botLab);
 		ImageIcon botLabImg = new ImageIcon("IMG/button placeholder 550.png");
 		botLab.setIcon(botLabImg);
-		}
+	}
 
 	private void initButtons(ListenForButton lforbuttons) {
 		HTMLButton = new JButton(new ImageIcon(
@@ -1125,6 +1129,7 @@ public class Init extends JFrame {
 	class ListenForButton implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
+
 			if (e.getSource() == menuFinalize) {
 				if (tagArray.size() == 0) {
 					JOptionPane.showMessageDialog(null,
@@ -1138,242 +1143,61 @@ public class Init extends JFrame {
 					JOptionPane.showMessageDialog(null, String
 							.format("Please finish your page before you attempt to create it!", e.getActionCommand()));
 				}
-
 			}
-
 			if (e.getSource() == HTMLButton) {
-				tagArray.add("<!DOCTYPE html>");
-				tagArray.add("<HTML>");
-				ArrayDisplay.append("\n" + "\n" + "<!DOCTYPE html>");
-				ArrayDisplay.append("\n" + "<html>");
-				HTMLButton.setEnabled(false);
-				HeadButton.setEnabled(true);
-				TutConsole.setText(
-						"\r\n\r\n\r\nGood job! You officially started your web page. Additional tags will be placed by pressing their corresponding buttons as we go through the tutorial."
-								+ "\n\n" + "The <head> element is a container for all the head elements."
-								+ " The <head> element can include a title for the document, scripts, styles, meta information, and more."
-								+ "\n\n For now we will add just a title. \n\n CONTINUE by placing your Head tag");
-				ImageIcon HeadNImg = new ImageIcon("IMG/Nhead.png");
-				HeadButton.setIcon(HeadNImg);
-
+				HTMLButtonL htmlbuttonl = HTMLButtonL.execute();
 			}
+
 			if (e.getSource() == HeadButton) {
-				tagArray.add("<HEAD>");
-				ArrayDisplay.append("\n" + "<head>");
-				HeadButton.setEnabled(false);
-				TitleButton.setEnabled(true);
-				TitleButton.setVisible(true);
-				TutConsole.setText(
-						"\r\n\r\n\r\nYou can see on the far right pane that when you add tags to your website that it encloses them with < and >. These brackets are needed to close tags for your web page to be interpreted by a browser. \n\n CONTINUE by adding a title tag to your page by typing in the textbox and saving your progress");
-				ImageIcon TitleNImg = new ImageIcon("IMG/NTitle.png");
-				TitleButton.setIcon(TitleNImg);
+				HeadButtonL headbuttonl = HeadButtonL.execute();
 			}
 			if (e.getSource() == TitleButton) {
-				tagArray.add("<TITLE>");
-				ArrayDisplay.append("\n" + "<title>");
-				TutConsole.setText("\n\nTo CONTINUE please click the Save button after entering your title");
-				TitleButton.setEnabled(false);
-				TitleButton.setEnabled(false);
-				TitleButton.setVisible(false);
-				MultiLineEntry.setEditable(true);
-				TitleSaveButton.setVisible(true);
-				TitleSaveButton.setEnabled(true);
-				DummySaveButton.setVisible(false);
-				ImageIcon TitleSaveNImg = new ImageIcon("IMG/Nsave.png");
-				TitleSaveButton.setIcon(TitleSaveNImg);
+				TitleButtonL titlebutton1 = TitleButtonL.execute();
 			}
 			if (e.getSource() == TitleSaveButton) {
-				String userInput = MultiLineEntry.getText();
-				ArrayDisplay.append("\n" + userInput);
-				ArrayDisplay.append("\n" + "</title>");
-				ArrayDisplay.append("\n" + "</head>");
-				TutConsole.setText("\n\nTo CONTINUE please click the Body button");
-				tagArray.add(userInput);
-				tagArray.add("</title>");
-				tagArray.add("</head>");
-				MultiLineEntry.setText("");
-				TitleButton.setVisible(false);
-				MultiLineEntry.setEditable(false);
-				TitleSaveButton.setVisible(false);
-				BodyButton.setEnabled(true);
-				DummySaveButton.setVisible(true);
-				ImageIcon BodyNImg = new ImageIcon("IMG/Nbody.png");
-				BodyButton.setIcon(BodyNImg);
+				TitleSaveButtonL titlesavebuttonl = TitleSaveButtonL.execute();
 			}
-
 			if (e.getSource() == BodyButton) {
-				tagArray.add("<body>");
-				ArrayDisplay.append("\n" + "<body>");
-				TutConsole
-						.setText("\n\n\n Add body tags and text here \n\n To CONTINUE please click the Footer button");
-				BodyButton.setEnabled(false);
-				FooterButton.setEnabled(true);
-				textEditTrue();
-				footerNImg = new ImageIcon("IMG/Nfooter.png");
-				FooterButton.setIcon(footerNImg);
-				imgButton.setVisible(true);
-				linkButton.setVisible(true);
-				MultiLineEntry.setEditable(true);
-				DummySaveButton.setVisible(false);
-				defaultSaveButton.setVisible(true);
-				listButton.setVisible(true);
+			BodyButtonL bodybuttonl = BodyButtonL.execute();
 			}
 			if (e.getSource() == FooterButton) {
-				tagArray.add("</body>");
-				ArrayDisplay.append("\n" + "</body>");
-				tagArray.add("<footer>");
-				ArrayDisplay.append("\n" + "<footer>");
-				TutConsole.setText(
-						"\n\n\n Add Add footer page information here. \n\n To CONTINUE please click the Save button");
-				FooterButton.setEnabled(false);
-				listButton.setVisible(false);
-				MultiLineEntry.setEditable(true);
-				FooterSaveButton.setVisible(true);
-				textEditFalse();
-				ImageIcon footerImg = new ImageIcon("IMG/footer.png");
-				FooterButton.setIcon(footerImg);
-				ImageIcon FooterSaveNImg = new ImageIcon("IMG/Nsave.png");
-				FooterSaveButton.setIcon(FooterSaveNImg);
-				imgButton.setVisible(false);
-				linkButton.setVisible(false);
+			FooterButtonL footerbuttonl = FooterButtonL.execute();
 			}
 			if (e.getSource() == FooterSaveButton) {
-				String userInput = MultiLineEntry.getText();
-				ArrayDisplay.append("\n" + userInput);
-				ArrayDisplay.append("\n" + "</footer>");
-				ArrayDisplay.append("\n" + "</html>");
-				TutConsole.setText(
-						"\n\n\n Your basic page is finished. You can add advanced options like CSS styling or CONTINUE by choosing finish and finalize from the menu above");
-				tagArray.add(userInput);
-				tagArray.add("</footer>");
-				tagArray.add("</html>");
-				MultiLineEntry.setText("");
-				TitleButton.setVisible(false);
-				MultiLineEntry.setEditable(false);
-				FooterSaveButton.setVisible(false);
-				DummySaveButton.setVisible(true);
-				if (frmWebgetLink.isVisible()) {
-					frmWebgetLink.setVisible(false);
-					linkAddy.setText("");
-					linkName.setText("");
-				}
+			FooterSaveButtonL footersavebuttonl = FooterSaveButtonL.execute();
 			}
 			if (e.getSource() == PButton) {
-				ArrayDisplay.append("\n" + "<p>");
-				tagArray.add("<p>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
-				emButton.setVisible(true);
-				StrongButton.setVisible(true);
-
+			PButtonL pbuttonl = PButtonL.execute();
 			}
 			if (e.getSource() == textEditSave) {
-				String userInput = MultiLineEntry.getText();
-				ArrayDisplay.append("\n" + userInput);
-				tagArray.add(userInput);
-				MultiLineEntry.setText("");
-				MultiLineEntry.setEditable(false);
-				textEditSave.setVisible(false);
-				String findLastTag = tagArray.get(tagArray.size() - 2);
-				StringBuilder sb = new StringBuilder(findLastTag).insert(1, '/');
-				String exitTag = sb.toString();
-				tagArray.add(exitTag);
-				ArrayDisplay.append("\n" + exitTag);
-				FooterButton.setEnabled(true);
-				DummySaveButton.setVisible(true);
-				textEditTrue();
-				String findpTag = tagArray.get(tagArray.size() - 4);
-				if (findpTag.equalsIgnoreCase("<p>")) {
-					ArrayDisplay.append("\n</p>");
-					tagArray.add("</p>");
-				}
-				if (FooterButton.getIcon() == footerNImg) {
-					MultiLineEntry.setEditable(true);
-				}
-
+			TextEditSaveL texteditsavel = TextEditSaveL.execute();
 			}
 			if (e.getSource() == defaultSaveButton) {
-				String userInput = MultiLineEntry.getText();
-				ArrayDisplay.append("\n" + userInput);
-				tagArray.add(userInput);
-				MultiLineEntry.setText("");
-				FooterButton.setEnabled(true);
-				textEditTrue();
+				DefaultSaveButtonL defaultsavebuttonl = DefaultSaveButtonL.execute();
 			}
 			if (e.getSource() == h1Button) {
-				ArrayDisplay.append("\n" + "<h1>");
-				tagArray.add("<h1>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				FooterButton.setEnabled(false);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
+				H1ButtonL h1buttonl = H1ButtonL.execute();
 			}
 			if (e.getSource() == h2Button) {
-				ArrayDisplay.append("\n" + "<h2>");
-				tagArray.add("<h2>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				FooterButton.setEnabled(false);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
+				H2ButtonL h2buttonl = H2ButtonL.execute();
 			}
 			if (e.getSource() == h3Button) {
-				ArrayDisplay.append("\n" + "<h3>");
-				tagArray.add("<h3>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				FooterButton.setEnabled(false);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
+				H3ButtonL h3buttonl = H3ButtonL.execute();
 			}
 			if (e.getSource() == h4Button) {
-				ArrayDisplay.append("\n" + "<h4>");
-				tagArray.add("<h4>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				FooterButton.setEnabled(false);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
+				H4ButtonL h4buttonl = H4ButtonL.execute();
 			}
 			if (e.getSource() == h5Button) {
-				ArrayDisplay.append("\n" + "<h5>");
-				tagArray.add("<h5>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				FooterButton.setEnabled(false);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
+				H5ButtonL h5buttonl = H5ButtonL.execute();
 			}
 			if (e.getSource() == h6Button) {
-				ArrayDisplay.append("\n" + "<h6>");
-				tagArray.add("<h6>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				FooterButton.setEnabled(false);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
+				H6ButtonL h6buttonl = H6ButtonL.execute();
 			}
 			if (e.getSource() == emButton) {
-				ArrayDisplay.append("\n" + "<em>");
-				tagArray.add("<em>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				FooterButton.setEnabled(false);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
-
+				EMButtonL embuttonl = EMButtonL.execute();
 			}
 			if (e.getSource() == StrongButton) {
-				ArrayDisplay.append("\n" + "<strong>");
-				tagArray.add("<strong>");
-				MultiLineEntry.setEditable(true);
-				textEditSave.setVisible(true);
-				FooterButton.setEnabled(false);
-				DummySaveButton.setVisible(false);
-				textEditFalse();
+				StrongButtonL strongbuttonl = StrongButtonL.execute();
 			}
 			if (e.getSource() == BrButton) {
 				ArrayDisplay.append("\n" + "<br>");
@@ -1394,13 +1218,7 @@ public class Init extends JFrame {
 				linkName.setText("");
 			}
 			if (e.getSource() == linkAdd) {
-				String userLinkAddy = linkAddy.getText();
-				String userLinkName = linkName.getText();
-				tagArray.add("<a href=\"http://" + userLinkAddy + "\">" + userLinkName + "</a><br>");
-				ArrayDisplay.append("\n <a href=\"http://" + userLinkAddy + "\">" + userLinkName + "</a>");
-				frmWebgetLink.setVisible(false);
-				linkAddy.setText("");
-				linkName.setText("");
+				LinkAddL linkaddl = LinkAddL.execute();
 			}
 			if (e.getSource() == linkButton) {
 				getLink(tagArray);
@@ -1492,6 +1310,7 @@ public class Init extends JFrame {
 					ArrayDisplay.append("\n <img src=\"IMG/SImages/lake.jpg\">\n<br>");
 				}
 			}
+
 		}
 
 	}
