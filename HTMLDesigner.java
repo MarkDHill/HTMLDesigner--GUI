@@ -28,9 +28,7 @@ public class HTMLDesigner extends JFrame {
 					HTMLDesigner window = new HTMLDesigner();
 					Init init = new Init();
 					init.initialize(window);
-					
-					//window.frmWebPageBasics.setVisible(true);
-				} catch (Exception e) {
+					} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

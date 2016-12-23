@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -87,9 +86,6 @@ public class Init extends JFrame {
 
 	static ArrayList<String> tagArray = new ArrayList<>();
 
-	
-	
-	
 	void textEditTrue() {
 
 		h1Button.setVisible(true);
@@ -114,6 +110,7 @@ public class Init extends JFrame {
 		emButton.setVisible(false);
 		StrongButton.setVisible(false);
 		BrButton.setVisible(false);
+		PButton.setVisible(false);
 	}
 
 	void OrderedListSave() {
@@ -662,75 +659,12 @@ public class Init extends JFrame {
 	}
 
 	public void initialize(HTMLDesigner inputhtmld) {
-		
-		frmWebPageBasics = new JFrame();
-		frmWebPageBasics.setResizable(false);
-		frmWebPageBasics.getContentPane().setBackground(SystemColor.activeCaptionBorder);
-		frmWebPageBasics.setTitle("Web Page Basics");
-		frmWebPageBasics.setBounds(100, 100, 1150, 750);
-		frmWebPageBasics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmWebPageBasics.getContentPane().setLayout(null);
-		frmWebPageBasics.setVisible(true);
-
-		frmWebgetLink = new JFrame();
-		frmWebgetLink.setResizable(false);
-		frmWebgetLink.getContentPane().setBackground(SystemColor.activeCaptionBorder);
-		frmWebgetLink.setTitle("Adding Links");
-		frmWebgetLink.setBounds(100, 100, 400, 400);
-		frmWebgetLink.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frmWebgetLink.getContentPane().setLayout(null);
-		frmWebgetLink.setVisible(false);
-
-		frmWebgetImg = new JFrame();
-		frmWebgetImg.setResizable(false);
-		frmWebgetImg.getContentPane().setBackground(SystemColor.activeCaptionBorder);
-		frmWebgetImg.setTitle("Adding Links");
-		frmWebgetImg.setBounds(100, 100, 600, 600);
-		frmWebgetImg.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frmWebgetImg.getContentPane().setLayout(null);
-		frmWebgetImg.setVisible(false);
-
-		frmWebgetList = new JFrame();
-		frmWebgetList.setResizable(false);
-		frmWebgetList.getContentPane().setBackground(SystemColor.activeCaptionBorder);
-		frmWebgetList.setTitle("Add List");
-		frmWebgetList.setBounds(100, 100, 400, 400);
-		frmWebgetList.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frmWebgetList.getContentPane().setLayout(null);
-		frmWebgetList.setVisible(false);
 
 		ListenForButton lforbuttons = new ListenForButton();
-
-		JMenuBar MainMenu = new JMenuBar();
-		MainMenu.setBounds(0, 0, 1134, 21);
-		frmWebPageBasics.getContentPane().add(MainMenu);
-
-		JMenu mnNewMenu = new JMenu("Options");
-		MainMenu.add(mnNewMenu);
-
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Undo Last Action");
-		mnNewMenu.add(mntmNewMenuItem_1);
-		mntmNewMenuItem_1.setEnabled(false);
-
-		ResetPage = new JMenuItem("Reset Page");
-		mnNewMenu.add(ResetPage);
-		ResetPage.addActionListener(lforbuttons);
-
-		JMenu mnFinish = new JMenu("Finish");
-		MainMenu.add(mnFinish);
-
-		menuFinalize = new JMenuItem("Finalize Page");
-		mnFinish.add(menuFinalize);
-		menuFinalize.addActionListener(lforbuttons);
-
-		JMenu mnNewMenu_1 = new JMenu("Advanced");
-		mnNewMenu_1.setActionCommand("");
-		MainMenu.add(mnNewMenu_1);
-
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("CSS Styling");
-		mnNewMenu_1.add(mntmNewMenuItem_2);
-		mntmNewMenuItem_2.setEnabled(false);
-
+		initJFrames();
+		initMenu(lforbuttons);
+		initButtons(lforbuttons);
+		
 		ArrayDisplay = new TextArea();
 		ArrayDisplay.setBackground(SystemColor.scrollbar);
 		ArrayDisplay.setEditable(false);
@@ -738,6 +672,35 @@ public class Init extends JFrame {
 		ArrayDisplay.setBounds(991, 32, 153, 680);
 		frmWebPageBasics.getContentPane().add(ArrayDisplay);
 
+		TutConsole = new JTextArea();
+		TutConsole.setWrapStyleWord(true);
+		TutConsole.setLineWrap(true);
+		TutConsole.setFont(new Font("Dialog", Font.PLAIN, 14));
+		TutConsole.setBackground(SystemColor.scrollbar);
+		TutConsole.setEditable(false);
+		TutConsole.setText(
+				"\r\n\r\n\r\n Welcome to your introduction to Web Page Basics tutorial! When you're ready to get started on your web page, please click the HTML button. This will add an <html> tag to your page,"
+						+ " which you will be able to view in the panel on the right side of your screen. It will also add a document type declaration: <!DOCTYPE html>, which is a required component for all HTML documents.\n"
+						+ "\nThe HTML document itself begins with the <html> tag, and will end with the closing tag </html>."
+						+ "\n\nTo CONTINUE, please click the HTML button and start your web page!");
+		TutConsole.setBounds(10, 32, 332, 680);
+		frmWebPageBasics.getContentPane().add(TutConsole);
+
+		JLabel BannerLab = new JLabel("Your banner is broke yo");
+		BannerLab.setBounds(363, 42, 600, 115);
+		frmWebPageBasics.getContentPane().add(BannerLab);
+		ImageIcon BannerImg = new ImageIcon("IMG/BannerTest-png.png");
+		BannerLab.setIcon(BannerImg);
+
+		JLabel botLab = new JLabel(new ImageIcon(((new ImageIcon("IMG/button placeholder 550.png").getImage()
+				.getScaledInstance(600, 14, java.awt.Image.SCALE_SMOOTH)))));
+		botLab.setBounds(363, 699, 600, 14);
+		frmWebPageBasics.getContentPane().add(botLab);
+		ImageIcon botLabImg = new ImageIcon("IMG/button placeholder 550.png");
+		botLab.setIcon(botLabImg);
+		}
+
+	private void initButtons(ListenForButton lforbuttons) {
 		HTMLButton = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/html.png").getImage().getScaledInstance(127, 27, java.awt.Image.SCALE_SMOOTH)))));
 		HTMLButton.setOpaque(false);
@@ -1069,34 +1032,6 @@ public class Init extends JFrame {
 		imgButton.setOpaque(false);
 		imgButton.setBorderPainted(false);
 
-		TutConsole = new JTextArea();
-		TutConsole.setWrapStyleWord(true);
-		// TutConsole.setColumns (100);
-		TutConsole.setLineWrap(true);
-		TutConsole.setFont(new Font("Dialog", Font.PLAIN, 14));
-		TutConsole.setBackground(SystemColor.scrollbar);
-		TutConsole.setEditable(false);
-		TutConsole.setText(
-				"\r\n\r\n\r\n Welcome to your introduction to Web Page Basics tutorial! When you're ready to get started on your web page, please click the HTML button. This will add an <html> tag to your page,"
-						+ " which you will be able to view in the panel on the right side of your screen. It will also add a document type declaration: <!DOCTYPE html>, which is a required component for all HTML documents.\n"
-						+ "\nThe HTML document itself begins with the <html> tag, and will end with the closing tag </html>."
-						+ "\n\nTo CONTINUE, please click the HTML button and start your web page!");
-		TutConsole.setBounds(10, 32, 332, 680);
-		frmWebPageBasics.getContentPane().add(TutConsole);
-
-		JLabel BannerLab = new JLabel("Your banner is broke yo");
-		BannerLab.setBounds(363, 42, 600, 115);
-		frmWebPageBasics.getContentPane().add(BannerLab);
-		ImageIcon BannerImg = new ImageIcon("IMG/BannerTest-png.png");
-		BannerLab.setIcon(BannerImg);
-
-		JLabel botLab = new JLabel(new ImageIcon(((new ImageIcon("IMG/button placeholder 550.png").getImage()
-				.getScaledInstance(600, 14, java.awt.Image.SCALE_SMOOTH)))));
-		botLab.setBounds(363, 699, 600, 14);
-		frmWebPageBasics.getContentPane().add(botLab);
-		ImageIcon botLabImg = new ImageIcon("IMG/button placeholder 550.png");
-		botLab.setIcon(botLabImg);
-
 		listButton = new JButton(new ImageIcon(((new ImageIcon("IMG/button_list passive.png").getImage()
 				.getScaledInstance(87, 27, java.awt.Image.SCALE_SMOOTH)))));
 		listButton.setBounds(527, 169, 87, 27);
@@ -1112,7 +1047,76 @@ public class Init extends JFrame {
 		listButton.setRolloverIcon(ListRImg);
 		linkButton.setOpaque(false);
 		linkButton.setBorderPainted(false);
+	}
 
+	private void initMenu(ListenForButton lforbuttons) {
+		JMenuBar MainMenu = new JMenuBar();
+		MainMenu.setBounds(0, 0, 1134, 21);
+		frmWebPageBasics.getContentPane().add(MainMenu);
+
+		JMenu mnNewMenu = new JMenu("Options");
+		MainMenu.add(mnNewMenu);
+
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Undo Last Action");
+		mnNewMenu.add(mntmNewMenuItem_1);
+		mntmNewMenuItem_1.setEnabled(false);
+
+		ResetPage = new JMenuItem("Reset Page");
+		mnNewMenu.add(ResetPage);
+		ResetPage.addActionListener(lforbuttons);
+
+		JMenu mnFinish = new JMenu("Finish");
+		MainMenu.add(mnFinish);
+
+		menuFinalize = new JMenuItem("Finalize Page");
+		mnFinish.add(menuFinalize);
+		menuFinalize.addActionListener(lforbuttons);
+
+		JMenu mnNewMenu_1 = new JMenu("Advanced");
+		mnNewMenu_1.setActionCommand("");
+		MainMenu.add(mnNewMenu_1);
+
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("CSS Styling");
+		mnNewMenu_1.add(mntmNewMenuItem_2);
+		mntmNewMenuItem_2.setEnabled(false);
+	}
+
+	private void initJFrames() {
+		frmWebPageBasics = new JFrame();
+		frmWebPageBasics.setResizable(false);
+		frmWebPageBasics.getContentPane().setBackground(SystemColor.activeCaptionBorder);
+		frmWebPageBasics.setTitle("Web Page Basics");
+		frmWebPageBasics.setBounds(100, 100, 1150, 750);
+		frmWebPageBasics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmWebPageBasics.getContentPane().setLayout(null);
+		frmWebPageBasics.setVisible(true);
+
+		frmWebgetLink = new JFrame();
+		frmWebgetLink.setResizable(false);
+		frmWebgetLink.getContentPane().setBackground(SystemColor.activeCaptionBorder);
+		frmWebgetLink.setTitle("Adding Links");
+		frmWebgetLink.setBounds(100, 100, 400, 400);
+		frmWebgetLink.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frmWebgetLink.getContentPane().setLayout(null);
+		frmWebgetLink.setVisible(false);
+
+		frmWebgetImg = new JFrame();
+		frmWebgetImg.setResizable(false);
+		frmWebgetImg.getContentPane().setBackground(SystemColor.activeCaptionBorder);
+		frmWebgetImg.setTitle("Adding Links");
+		frmWebgetImg.setBounds(100, 100, 600, 600);
+		frmWebgetImg.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frmWebgetImg.getContentPane().setLayout(null);
+		frmWebgetImg.setVisible(false);
+
+		frmWebgetList = new JFrame();
+		frmWebgetList.setResizable(false);
+		frmWebgetList.getContentPane().setBackground(SystemColor.activeCaptionBorder);
+		frmWebgetList.setTitle("Add List");
+		frmWebgetList.setBounds(100, 100, 400, 400);
+		frmWebgetList.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frmWebgetList.getContentPane().setLayout(null);
+		frmWebgetList.setVisible(false);
 	}
 
 	/**
