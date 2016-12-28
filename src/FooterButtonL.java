@@ -8,8 +8,6 @@ public class FooterButtonL extends Init {
 		ArrayDisplay.append("\n" + "</body>");
 		tagArray.add("<footer>");
 		ArrayDisplay.append("\n" + "<footer>");
-		TutConsole.setText(
-				"\n\n\n Add Add footer page information here. \n\n To CONTINUE please click the Save button");
 		FooterButton.setEnabled(false);
 		listButton.setVisible(false);
 		MultiLineEntry.setEditable(true);

@@ -5,10 +5,10 @@ public class TitleSaveButtonL extends Init {
 
 	public static TitleSaveButtonL execute() {
 		String userInput = MultiLineEntry.getText();
+		userTitleLen = MultiLineEntry.getText().length();
 		ArrayDisplay.append("\n" + userInput);
 		ArrayDisplay.append("\n" + "</title>");
 		ArrayDisplay.append("\n" + "</head>");
-		TutConsole.setText("\n\nTo CONTINUE please click the Body button");
 		tagArray.add(userInput);
 		tagArray.add("</title>");
 		tagArray.add("</head>");

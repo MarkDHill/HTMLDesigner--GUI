@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Font;
@@ -18,7 +20,9 @@ import java.util.ArrayList;
 import javax.print.DocFlavor.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,7 +47,9 @@ public class Init extends JFrame {
 	static JFrame frmWebgetLink;
 	JFrame frmWebgetImg;
 	JFrame frmWebgetList;
+	JFrame bgframe;
 	JMenuItem menuFinalize, ResetPage;
+	static JMenuItem CSSStyling;
 	static JButton HTMLButton;
 	static JButton HeadButton;
 	static JButton TitleButton;
@@ -65,6 +71,7 @@ public class Init extends JFrame {
 	static JButton BrButton;
 	static JButton linkButton;
 	static JButton imgButton;
+	static JButton bgColorButton;
 	JButton linkCancel;
 	JButton linkAdd;
 	JButton RandImg1;
@@ -87,6 +94,7 @@ public class Init extends JFrame {
 	static JTextArea linkAddy;
 	static JTextArea linkName;
 	JLabel SelectedImg;
+	static JLabel tutBanner;
 	ImageIcon cakeImg, cityImg, puppyImg, carImg, lakeImg, travelImg;
 	static ImageIcon footerNImg;
 	JTextField Li1, Li2, Li3, Li4, Li5, Li6;
@@ -94,13 +102,60 @@ public class Init extends JFrame {
 	JComboBox liNum;
 	String liNumVal = null;
 	HTMLDesignerApp htmld;
+	ImageIcon tutBannerHTML;
+	static ImageIcon tutBannerHead;
+	static ImageIcon tutBannerTitle;
+	ImageIcon tutBannerBody;
+	ImageIcon tutBannerFooter;
+	static JMenuItem UndoButton;
+	static int userTitleLen;
+	
+	// this arrayList writes the final document all text and tags are added
+	static ArrayList<String> tagArray = new ArrayList<>();
+	// this arrayList keeps track of button hit for the undo method 
+	static ArrayList<String> buttonHitList = new ArrayList<>();
+	
+	
+	public static ArrayList<String> getButtonHitList() {
+		return buttonHitList;
+	}
+
+	public static void setButtonHitList(ArrayList<String> buttonHitList) {
+		Init.buttonHitList = buttonHitList;
+	}
 
 	
-	
-	
-	
-	
-	static ArrayList<String> tagArray = new ArrayList<>();
+	public static JButton getTitleButton() {
+		return TitleButton;
+	}
+
+	public static void setTitleButton(JButton titleButton) {
+		TitleButton = titleButton;
+	}
+
+	public static JButton getBgColorButton() {
+		return bgColorButton;
+	}
+
+	public static void setBgColorButton(JButton bgColorButton) {
+		Init.bgColorButton = bgColorButton;
+	}
+
+	public static TextArea getArrayDisplay() {
+		return ArrayDisplay;
+	}
+
+	public static void setArrayDisplay(TextArea arrayDisplay) {
+		ArrayDisplay = arrayDisplay;
+	}
+
+	public static ArrayList<String> getTagArray() {
+		return tagArray;
+	}
+
+	public static void setTagArray(ArrayList<String> tagArray) {
+		Init.tagArray = tagArray;
+	}
 
 	static void textEditTrue() {
 
@@ -223,24 +278,24 @@ public class Init extends JFrame {
 	void finishPage() {
 
 		String decodedPath = null;
-		
+
 		String path = HTMLDesignerApp.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		try {
-			 decodedPath = URLDecoder.decode(path, "UTF-8");
+			decodedPath = URLDecoder.decode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
-		e1.printStackTrace();
+			e1.printStackTrace();
 		}
 
 		String getProperty = System.getProperty("java.class.path");
 		final File dirToLock = new File(getProperty + decodedPath);
 		JFileChooser fc = new JFileChooser(dirToLock);
 		fc.setFileView(new FileView() {
-		   @Override
+			@Override
 			public Boolean isTraversable(File f) {
-		         return dirToLock.equals(f);
-		    }
+				return dirToLock.equals(f);
+			}
 		});
-		
+
 		if (fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 
 			FileWriter writer = null;
@@ -279,7 +334,7 @@ public class Init extends JFrame {
 			}
 
 		} else {
-			System.out.println("No Selection ");
+			System.out.println("Something broke");
 		}
 	}
 
@@ -297,6 +352,10 @@ public class Init extends JFrame {
 
 			textEditFalse();
 			ArrayDisplay.setText("Page in Progress...");
+			HTMLButton.setVisible(true);
+			HeadButton.setVisible(true);
+			BodyButton.setVisible(true);
+			FooterButton.setVisible(true);
 			HTMLButton.setEnabled(true);
 			HeadButton.setEnabled(false);
 			BodyButton.setEnabled(false);
@@ -308,14 +367,14 @@ public class Init extends JFrame {
 			imgButton.setVisible(false);
 			linkButton.setVisible(false);
 			defaultSaveButton.setVisible(false);
+			ImageIcon tutBanImg = new ImageIcon("IMG/tutBanner.png");
+			tutBanner.setIcon(tutBanImg);
 			listButton.setVisible(false);
-			MultiLineEntry.setText("");
+			bgColorButton.setVisible(false);
+			if (!MultiLineEntry.getText().isEmpty()) {
+				MultiLineEntry.setText("");
+			}
 			MultiLineEntry.setEditable(false);
-			TutConsole.setText(
-					"\r\n\r\n\r\n Welcome to your introduction to Web Page Basics tutorial! When you're ready to get started on your web page, please click the HTML button. This will add an <html> tag to your page,"
-							+ " which you will be able to view in the panel on the right side of your screen. It will also add a document type declaration: <!DOCTYPE html>, which is a required component for all HTML documents.\n"
-							+ "\nThe HTML document itself begins with the <html> tag, and will end with the closing tag </html>."
-							+ "\n\nTo CONTINUE, please click the HTML button and start your web page!");
 			TitleButton.setVisible(false);
 			if (frmWebgetLink.isVisible()) {
 				frmWebgetLink.setVisible(false);
@@ -327,6 +386,9 @@ public class Init extends JFrame {
 			}
 			if (frmWebgetList.isVisible()) {
 				frmWebgetList.setVisible(false);
+			}
+			if (bgframe.isVisible()) {
+				bgframe.setVisible(false);
 			}
 		} else if (n == JOptionPane.NO_OPTION) {
 
@@ -353,19 +415,18 @@ public class Init extends JFrame {
 		linkAddy = new JTextArea();
 		linkAddy.setEditable(true);
 		linkAddy.setVisible(true);
-		linkAddy.setBounds(100, 180, 180, 20);
+		linkAddy.setBounds(100, 250, 180, 20);
 		frmWebgetLink.getContentPane().add(linkAddy);
 
 		linkName = new JTextArea();
 		linkName.setEditable(true);
 		linkName.setVisible(true);
-		linkName.setBounds(100, 250, 180, 20);
+		linkName.setBounds(100, 180, 180, 20);
 		frmWebgetLink.getContentPane().add(linkName);
 
 		linkAdd = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
-		linkAdd.setBounds(50, 300, 127, 27);
-		linkAdd.setOpaque(false);
+		linkAdd.setBounds(200, 320, 127, 27);
 		linkAdd.setBorderPainted(false);
 		ImageIcon DefaultSaveImg = new ImageIcon("IMG/save.png");
 		ImageIcon DefaultSaveRImg = new ImageIcon("IMG/RSave.png");
@@ -377,11 +438,10 @@ public class Init extends JFrame {
 		frmWebgetLink.getContentPane().add(linkAdd);
 		linkAdd.addActionListener(lforbuttons);
 		linkAdd.setOpaque(false);
-		linkAdd.setBorderPainted(false);
 
 		linkCancel = new JButton(new ImageIcon(((new ImageIcon("IMG/button_cancel passive.png").getImage()
 				.getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
-		linkCancel.setBounds(200, 300, 127, 27);
+		linkCancel.setBounds(50, 320, 127, 27);
 		linkCancel.setOpaque(false);
 		linkCancel.setBorderPainted(false);
 		ImageIcon CancelImg = new ImageIcon("IMG/button_cancel passive.png");
@@ -393,19 +453,18 @@ public class Init extends JFrame {
 		linkCancel.setVisible(true);
 		frmWebgetLink.getContentPane().add(linkCancel);
 		linkCancel.addActionListener(lforbuttons);
-		linkCancel.setOpaque(false);
-		linkCancel.setBorderPainted(false);
 
-		JLabel sBar = new JLabel(new ImageIcon(
-				((new ImageIcon("IMG/sBar.png").getImage().getScaledInstance(380, 5, java.awt.Image.SCALE_SMOOTH)))));
-		sBar.setBounds(5, 360, 380, 5);
-		frmWebgetLink.getContentPane().add(sBar);
-		ImageIcon sBarImg = new ImageIcon("IMG/sBar.png");
-		sBar.setIcon(sBarImg);
+		/*
+		 * JLabel sBar = new JLabel(new ImageIcon( ((new
+		 * ImageIcon("IMG/sBar.png").getImage().getScaledInstance(380, 5,
+		 * java.awt.Image.SCALE_SMOOTH))))); sBar.setBounds(5, 360, 380, 5);
+		 * frmWebgetLink.getContentPane().add(sBar); ImageIcon sBarImg = new
+		 * ImageIcon("IMG/sBar.png"); sBar.setIcon(sBarImg);
+		 */
 
 		JLabel addLink = new JLabel(new ImageIcon(((new ImageIcon("IMG/addLink.png").getImage().getScaledInstance(400,
-				60, java.awt.Image.SCALE_SMOOTH)))));
-		addLink.setBounds(0, 10, 400, 60);
+				400, java.awt.Image.SCALE_SMOOTH)))));
+		addLink.setBounds(0, -30, 400, 400);
 		frmWebgetLink.getContentPane().add(addLink);
 		ImageIcon addLinkImg = new ImageIcon("IMG/addLink.png");
 		addLink.setIcon(addLinkImg);
@@ -465,7 +524,7 @@ public class Init extends JFrame {
 
 		listSave = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
-		listSave.setBounds(51, 314, 127, 27);
+		listSave.setBounds(215, 314, 127, 27);
 		frmWebgetList.getContentPane().add(listSave);
 		ImageIcon listSaveImg = new ImageIcon("IMG/save.png");
 		ImageIcon listSaveRImg = new ImageIcon("IMG/Rsave.png");
@@ -494,7 +553,7 @@ public class Init extends JFrame {
 
 		listCancel = new JButton(new ImageIcon(((new ImageIcon("IMG/button_cancel passive.png").getImage()
 				.getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
-		listCancel.setBounds(215, 314, 127, 27);
+		listCancel.setBounds(51, 314, 127, 27);
 		frmWebgetList.getContentPane().add(listCancel);
 		ImageIcon imgCancel = new ImageIcon("IMG/button_cancel passive.png");
 		ImageIcon imgRCancel = new ImageIcon("IMG/button_cancel rollover.png");
@@ -644,7 +703,7 @@ public class Init extends JFrame {
 
 		saveImg = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
-		saveImg.setBounds(143, 514, 127, 27);
+		saveImg.setBounds(319, 514, 127, 27);
 		frmWebgetImg.getContentPane().add(saveImg);
 		ImageIcon imgImg = new ImageIcon("IMG/save.png");
 		ImageIcon imgRImg = new ImageIcon("IMG/Rsave.png");
@@ -659,7 +718,7 @@ public class Init extends JFrame {
 
 		cancelImg = new JButton(new ImageIcon(((new ImageIcon("IMG/button_cancel passive.png").getImage()
 				.getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
-		cancelImg.setBounds(319, 514, 127, 27);
+		cancelImg.setBounds(143, 514, 127, 27);
 		frmWebgetImg.getContentPane().add(cancelImg);
 		ImageIcon imgCancel = new ImageIcon("IMG/button_cancel passive.png");
 		ImageIcon imgRCancel = new ImageIcon("IMG/button_cancel rollover.png");
@@ -710,6 +769,12 @@ public class Init extends JFrame {
 		ArrayDisplay.setBounds(991, 32, 153, 680);
 		frmWebPageBasics.getContentPane().add(ArrayDisplay);
 
+		tutBanner = new JLabel("Dev note- Import blue screen of death for funsies");
+		tutBanner.setBounds(10, 32, 332, 680);
+		frmWebPageBasics.getContentPane().add(tutBanner);
+		ImageIcon tutBanImg = new ImageIcon("IMG/tutBanner.png");
+		tutBanner.setIcon(tutBanImg);
+
 		TutConsole = new JTextArea();
 		TutConsole.setWrapStyleWord(true);
 		TutConsole.setLineWrap(true);
@@ -722,9 +787,16 @@ public class Init extends JFrame {
 						+ "\nThe HTML document itself begins with the <html> tag, and will end with the closing tag </html>."
 						+ "\n\nTo CONTINUE, please click the HTML button and start your web page!");
 		TutConsole.setBounds(10, 32, 332, 680);
-		frmWebPageBasics.getContentPane().add(TutConsole);
+		// frmWebPageBasics.getContentPane().add(TutConsole);
 
-		JLabel BannerLab = new JLabel("Your banner is broke yo");
+		MultiLineEntry = new TextArea();
+		MultiLineEntry.setBackground(UIManager.getColor("CheckBox.light"));
+		MultiLineEntry.setVisible(true);
+		MultiLineEntry.setEditable(false);
+		MultiLineEntry.setBounds(481, 543, 285, 150);
+		frmWebPageBasics.getContentPane().add(MultiLineEntry);
+
+		JLabel BannerLab = new JLabel("Sorry Mario, but our banner is in another castle");
 		BannerLab.setBounds(363, 42, 600, 115);
 		frmWebPageBasics.getContentPane().add(BannerLab);
 		ImageIcon BannerImg = new ImageIcon("IMG/BannerTest-png.png");
@@ -813,13 +885,6 @@ public class Init extends JFrame {
 		frmWebPageBasics.getContentPane().add(TitleButton);
 		TitleButton.addActionListener(lforbuttons);
 		TitleButton.setRolloverIcon(TitleRImg);
-
-		MultiLineEntry = new TextArea();
-		MultiLineEntry.setBackground(UIManager.getColor("CheckBox.light"));
-		MultiLineEntry.setVisible(true);
-		MultiLineEntry.setEditable(false);
-		MultiLineEntry.setBounds(481, 543, 285, 150);
-		frmWebPageBasics.getContentPane().add(MultiLineEntry);
 
 		TitleSaveButton = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
@@ -1036,12 +1101,6 @@ public class Init extends JFrame {
 		StrongButton.setOpaque(false);
 		StrongButton.setBorderPainted(false);
 
-		JButton btnNewButton_5 = new JButton("Lists");
-		btnNewButton_5.setToolTipText("Adds a list to your webpage");
-		btnNewButton_5.setVisible(false);
-		btnNewButton_5.setBounds(782, 375, 89, 23);
-		frmWebPageBasics.getContentPane().add(btnNewButton_5);
-
 		linkButton = new JButton(new ImageIcon(((new ImageIcon("IMG/button_link passive.png").getImage()
 				.getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
 		ImageIcon linkImg = new ImageIcon("IMG/button_link passive.png");
@@ -1071,20 +1130,35 @@ public class Init extends JFrame {
 		imgButton.setBorderPainted(false);
 
 		listButton = new JButton(new ImageIcon(((new ImageIcon("IMG/button_list passive.png").getImage()
-				.getScaledInstance(87, 27, java.awt.Image.SCALE_SMOOTH)))));
+				.getScaledInstance(84, 31, java.awt.Image.SCALE_SMOOTH)))));
 		listButton.setBounds(527, 169, 87, 27);
-		listButton.setBorderPainted(false);
 		ImageIcon ListImg = new ImageIcon("IMG/button_list passive.png");
 		ImageIcon ListRImg = new ImageIcon("IMG/button_list rollover.png");
 		listButton.setIcon(ListImg);
 		listButton.setDisabledIcon(ListImg);
-		listButton.setToolTipText("The <title> element specifies a title for the document");
+		listButton.setOpaque(false);
+		listButton.setBorderPainted(false);
+		listButton.setToolTipText("Adds either an ordered or unordered list");
 		listButton.setVisible(false);
 		frmWebPageBasics.getContentPane().add(listButton);
 		listButton.addActionListener(lforbuttons);
 		listButton.setRolloverIcon(ListRImg);
-		linkButton.setOpaque(false);
-		linkButton.setBorderPainted(false);
+
+		bgColorButton = new JButton(new ImageIcon(
+				((new ImageIcon("IMG/button_background next.png").getImage().getScaledInstance(127, 27, java.awt.Image.SCALE_SMOOTH)))));
+		bgColorButton.setOpaque(false);
+		bgColorButton.setBorderPainted(false);
+		bgColorButton.setToolTipText("Adds a uniform background color to the webpage");
+		bgColorButton.setBounds(486, 299, 127, 27);
+		frmWebPageBasics.getContentPane().add(bgColorButton);
+		bgColorButton.setVisible(false);
+		bgColorButton.addActionListener(lforbuttons);
+		 ImageIcon bgImg = new ImageIcon("IMG/button_background passive.png");
+		 ImageIcon bgRImg = new ImageIcon("IMG/button_background rollover.png");
+		 ImageIcon bgNImg = new ImageIcon("IMG/button_background next.png");
+		bgColorButton.setIcon(bgNImg);
+		bgColorButton.setDisabledIcon(bgImg);
+		bgColorButton.setRolloverIcon(bgRImg);
 	}
 
 	private void initMenu(ListenForButton lforbuttons) {
@@ -1095,10 +1169,11 @@ public class Init extends JFrame {
 		JMenu mnNewMenu = new JMenu("Options");
 		MainMenu.add(mnNewMenu);
 
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Undo Last Action");
-		mnNewMenu.add(mntmNewMenuItem_1);
-		mntmNewMenuItem_1.setEnabled(false);
-
+		UndoButton = new JMenuItem("Undo Last Action");
+		mnNewMenu.add(UndoButton);
+		UndoButton.setEnabled(false);
+		UndoButton.addActionListener(lforbuttons);
+		
 		ResetPage = new JMenuItem("Reset Page");
 		mnNewMenu.add(ResetPage);
 		ResetPage.addActionListener(lforbuttons);
@@ -1110,13 +1185,14 @@ public class Init extends JFrame {
 		mnFinish.add(menuFinalize);
 		menuFinalize.addActionListener(lforbuttons);
 
-		JMenu mnNewMenu_1 = new JMenu("Advanced");
-		mnNewMenu_1.setActionCommand("");
-		MainMenu.add(mnNewMenu_1);
-
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("CSS Styling");
-		mnNewMenu_1.add(mntmNewMenuItem_2);
-		mntmNewMenuItem_2.setEnabled(false);
+		/*
+		 * JMenu mnNewMenu_1 = new JMenu("Advanced");
+		 * mnNewMenu_1.setActionCommand(""); MainMenu.add(mnNewMenu_1);
+		 * 
+		 * CSSStyling = new JMenuItem("CSS Styling");
+		 * mnNewMenu_1.add(CSSStyling); CSSStyling.setEnabled(false);
+		 * CSSStyling.addActionListener(lforbuttons);
+		 */
 	}
 
 	private void initJFrames() {
@@ -1155,6 +1231,11 @@ public class Init extends JFrame {
 		frmWebgetList.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frmWebgetList.getContentPane().setLayout(null);
 		frmWebgetList.setVisible(false);
+
+		bgframe = new JFrame("Choosing Background Color");
+		bgframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frmWebgetList.setResizable(false);
+		frmWebgetList.setVisible(false);
 	}
 
 	/**
@@ -1179,6 +1260,19 @@ public class Init extends JFrame {
 							.format("Please finish your page before you attempt to create it!", e.getActionCommand()));
 				}
 			}
+/*			if (e.getSource() == CSSStyling) {
+				HTMLButton.setVisible(false);
+				HeadButton.setVisible(false);
+				BodyButton.setVisible(false);
+				FooterButton.setVisible(false);
+				bgColorButton.setVisible(true);
+			}*/
+			if (e.getSource() == bgColorButton) {
+				ColorChooserWindowbg colorchoice = new ColorChooserWindowbg();
+				colorchoice.createAndShowGUI();
+
+			}
+
 			if (e.getSource() == HTMLButton) {
 				HTMLButtonL htmlbuttonl = HTMLButtonL.execute();
 			}
@@ -1193,19 +1287,22 @@ public class Init extends JFrame {
 				TitleSaveButtonL titlesavebuttonl = TitleSaveButtonL.execute();
 			}
 			if (e.getSource() == BodyButton) {
-			BodyButtonL bodybuttonl = BodyButtonL.execute();
+				BodyButtonL bodybuttonl = BodyButtonL.execute();
 			}
 			if (e.getSource() == FooterButton) {
-			FooterButtonL footerbuttonl = FooterButtonL.execute();
+				FooterButtonL footerbuttonl = FooterButtonL.execute();
 			}
 			if (e.getSource() == FooterSaveButton) {
-			FooterSaveButtonL footersavebuttonl = FooterSaveButtonL.execute();
+				FooterSaveButtonL footersavebuttonl = FooterSaveButtonL.execute();
 			}
 			if (e.getSource() == PButton) {
-			PButtonL pbuttonl = PButtonL.execute();
+				PButtonL pbuttonl = PButtonL.execute();
+			}
+			if (e.getSource() == UndoButton) {
+				UndoButtonL undobuttonl = UndoButtonL.execute();
 			}
 			if (e.getSource() == textEditSave) {
-			TextEditSaveL texteditsavel = TextEditSaveL.execute();
+				TextEditSaveL texteditsavel = TextEditSaveL.execute();
 			}
 			if (e.getSource() == defaultSaveButton) {
 				DefaultSaveButtonL defaultsavebuttonl = DefaultSaveButtonL.execute();
