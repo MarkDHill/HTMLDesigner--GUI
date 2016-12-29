@@ -1,3 +1,4 @@
+import javax.swing.ImageIcon;
 
 public class FooterSaveButtonL extends Init {
 
@@ -10,6 +11,8 @@ public class FooterSaveButtonL extends Init {
 		ArrayDisplay.append("\n" + "</html>");
 		tagArray.add(userInput);
 		tagArray.add("</footer>");
+		ImageIcon tutBanImg = new ImageIcon("IMG/pg-9-finish-finalize png.png");
+		tutBanner.setIcon(tutBanImg);
 		tagArray.add("</html>");
 		MultiLineEntry.setText("");
 		MultiLineEntry.setEditable(false);

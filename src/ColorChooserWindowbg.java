@@ -134,7 +134,7 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 				JButton bgColorButton = Init.getBgColorButton();
 				JButton titleButton = Init.getTitleButton();
 				ArrayList<String> buttonHitList = Init.getButtonHitList();
-				
+				JLabel tutBanner = Init.getTutBanner();
 				
 				
 				tagArray.add(3, "<style> body {background-color:" + StringColor +";} </style>");
@@ -142,15 +142,10 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 				bgColorButton.setVisible(false);
 				titleButton.setVisible(true);
 				titleButton.setEnabled(true);
+				ImageIcon tutBanImg = new ImageIcon("IMG/pg-4-tag-title-png.png");
+				tutBanner.setIcon(tutBanImg);
 				
-				/*else if (!test.equalsIgnoreCase("<head>")) {
-					tagArray.set(3, "<style> body {background-color:" + StringColor +";} </style>");
-					ArrayDisplay.replaceRange("\n<style> body {background-color:" + StringColor +";} </style>", 50, 100);
-					bgColorButton.setVisible(false);
-					titleButton.setVisible(true);
-					titleButton.setEnabled(true);
-				}*/
-			}
+				}
 			if (e.getSource() == bgColorCancel) {
 				bgframe.setVisible(false);
 			}

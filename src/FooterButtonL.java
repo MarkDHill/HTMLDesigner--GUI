@@ -12,6 +12,8 @@ public class FooterButtonL extends Init {
 		listButton.setVisible(false);
 		MultiLineEntry.setEditable(true);
 		FooterSaveButton.setVisible(true);
+		ImageIcon tutBanImg = new ImageIcon("IMG/pg-8-add-footer-png.png");
+		tutBanner.setIcon(tutBanImg);
 		textEditFalse();
 		ImageIcon footerImg = new ImageIcon("IMG/footer.png");
 		FooterButton.setIcon(footerImg);

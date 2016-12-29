@@ -12,7 +12,7 @@ public class HTMLButtonL extends Init {
 		ArrayDisplay.append("\n" + "<html>");
 		HTMLButton.setEnabled(false);
 		HeadButton.setEnabled(true);
-		ImageIcon tutBanImg = new ImageIcon("IMG/tutBannerHead.png");
+		ImageIcon tutBanImg = new ImageIcon("IMG/pg-2-head-png.png");
 		tutBanner.setIcon(tutBanImg);
 		ImageIcon HeadNImg = new ImageIcon("IMG/Nhead.png");
 		HeadButton.setIcon(HeadNImg);

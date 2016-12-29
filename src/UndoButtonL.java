@@ -120,11 +120,16 @@ public class UndoButtonL extends Init {
 			DummySaveButton.setVisible(true);
 			defaultSaveButton.setVisible(false);
 			listButton.setVisible(false);
+			isValid = true;
+			continue;
 		}
-		
-		
-		
-		System.out.println(lastAdd);
+		if (lastAdd.equalsIgnoreCase("</ol>") || lastAdd.equalsIgnoreCase("</ul>")) {
+			int charLen = DisplayArray.getText().length();
+			ArrayDisplay.replaceRange("", (charLen -totTextDif), charLen);
+			tagArray.remove(lastAdd);
+			isValid = true;
+			continue;
+		}
 		break;
 		}
 		

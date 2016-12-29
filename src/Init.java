@@ -103,19 +103,25 @@ public class Init extends JFrame {
 	String liNumVal = null;
 	HTMLDesignerApp htmld;
 	ImageIcon tutBannerHTML;
-	static ImageIcon tutBannerHead;
-	static ImageIcon tutBannerTitle;
-	ImageIcon tutBannerBody;
-	ImageIcon tutBannerFooter;
 	static JMenuItem UndoButton;
 	static int userTitleLen;
-	
+	static int totTextBefore;
+	static int totTextAfter;
+	static int totTextDif;
 	// this arrayList writes the final document all text and tags are added
 	static ArrayList<String> tagArray = new ArrayList<>();
 	// this arrayList keeps track of button hit for the undo method 
 	static ArrayList<String> buttonHitList = new ArrayList<>();
 	
 	
+	public static JLabel getTutBanner() {
+		return tutBanner;
+	}
+
+	public static void setTutBanner(JLabel tutBanner) {
+		Init.tutBanner = tutBanner;
+	}
+
 	public static ArrayList<String> getButtonHitList() {
 		return buttonHitList;
 	}
@@ -193,7 +199,8 @@ public class Init extends JFrame {
 		String userLi5 = Li5.getText();
 		String userLi6 = Li6.getText();
 		liNumVal = liNum.getSelectedItem().toString();
-
+		totTextBefore = ArrayDisplay.getText().length();
+				
 		if (liNumVal == "1") {
 			tagArray.add("<ol><li>" + userLi1 + "</li></ol>");
 			ArrayDisplay.append("\n <ol> \n <li>" + "\n" + userLi1 + "\n</li>\n</ol>");
@@ -228,6 +235,8 @@ public class Init extends JFrame {
 					+ "\n</li>\n<li>\n" + userLi3 + "\n</li>\n<li>\n" + userLi4 + "\n</li>\n<li>\n" + userLi5
 					+ "\n</li>\n<li>\n" + userLi6 + "\n</li>\n</ol>");
 		}
+		totTextAfter = ArrayDisplay.getText().length();
+		totTextDif = (totTextAfter - totTextBefore);
 	}
 
 	void unOrderedListSave() {
@@ -238,7 +247,7 @@ public class Init extends JFrame {
 		String userLi5 = Li5.getText();
 		String userLi6 = Li6.getText();
 		liNumVal = liNum.getSelectedItem().toString();
-
+		totTextBefore = ArrayDisplay.getText().length();
 		if (liNumVal == "1") {
 			tagArray.add("<ul><li>" + userLi1 + "</li></ul>");
 			ArrayDisplay.append("\n <ul> \n <li>" + "\n" + userLi1 + "\n</li>\n</ul>");
@@ -273,6 +282,8 @@ public class Init extends JFrame {
 					+ "\n</li>\n<li>\n" + userLi3 + "\n</li>\n<li>\n" + userLi4 + "\n</li>\n<li>\n" + userLi5
 					+ "\n</li>\n<li>\n" + userLi6 + "\n</li>\n</ul>");
 		}
+		totTextAfter = ArrayDisplay.getText().length();
+		totTextDif = (totTextAfter - totTextBefore);
 	}
 
 	void finishPage() {
@@ -367,7 +378,7 @@ public class Init extends JFrame {
 			imgButton.setVisible(false);
 			linkButton.setVisible(false);
 			defaultSaveButton.setVisible(false);
-			ImageIcon tutBanImg = new ImageIcon("IMG/tutBanner.png");
+			ImageIcon tutBanImg = new ImageIcon("IMG/pg-1-welcome png.png");
 			tutBanner.setIcon(tutBanImg);
 			listButton.setVisible(false);
 			bgColorButton.setVisible(false);
@@ -772,7 +783,7 @@ public class Init extends JFrame {
 		tutBanner = new JLabel("Dev note- Import blue screen of death for funsies");
 		tutBanner.setBounds(10, 32, 332, 680);
 		frmWebPageBasics.getContentPane().add(tutBanner);
-		ImageIcon tutBanImg = new ImageIcon("IMG/tutBanner.png");
+		ImageIcon tutBanImg = new ImageIcon("IMG/pg-1-welcome png.png");
 		tutBanner.setIcon(tutBanImg);
 
 		TutConsole = new JTextArea();

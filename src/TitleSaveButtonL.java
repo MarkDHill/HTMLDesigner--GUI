@@ -15,6 +15,8 @@ public class TitleSaveButtonL extends Init {
 		MultiLineEntry.setText("");
 		TitleButton.setVisible(false);
 		MultiLineEntry.setEditable(false);
+		ImageIcon tutBanImg = new ImageIcon("IMG/pg-6-tag-body png.png");
+		tutBanner.setIcon(tutBanImg);
 		TitleSaveButton.setVisible(false);
 		BodyButton.setEnabled(true);
 		DummySaveButton.setVisible(true);

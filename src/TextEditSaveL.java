@@ -25,6 +25,7 @@ public class TextEditSaveL extends Init{
 		if (FooterButton.getIcon() == footerNImg) {
 			MultiLineEntry.setEditable(true);
 		}
+		
 		return null;
 	}
 	

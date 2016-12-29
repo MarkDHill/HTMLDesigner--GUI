@@ -10,6 +10,8 @@ public class BodyButtonL extends Init {
 		textEditTrue();
 		footerNImg = new ImageIcon("IMG/Nfooter.png");
 		FooterButton.setIcon(footerNImg);
+		ImageIcon tutBanImg = new ImageIcon("IMG/pg-7-add-body-content-png.png");
+		tutBanner.setIcon(tutBanImg);
 		bgColorButton.setVisible(false);
 		imgButton.setVisible(true);
 		linkButton.setVisible(true);
