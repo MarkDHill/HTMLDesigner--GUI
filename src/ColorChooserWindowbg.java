@@ -14,13 +14,12 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 	private final JPanel bannerPanelButtons = new JPanel((LayoutManager) null);
 	private JButton bgColorCancel;
 	private JButton bgColorSave;
-	private static JFrame bgframe;
+	static JFrame bgframe;
 	ListenForButton lforbuttons = new ListenForButton();
 	Color newColor;
 	Color defaultColor = Color.WHITE;
 	String StringColor = null;
-	
-	
+
 	public ColorChooserWindowbg() {
 		super(new BorderLayout());
 
@@ -50,15 +49,15 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 		add(bannerPanelButtons, BorderLayout.SOUTH);
 		bannerPanelButtons.setLayout(new BorderLayout());
 
-		bgColorCancel = new JButton(new ImageIcon(((new ImageIcon("IMG/button_cancel passive.png").getImage().getScaledInstance(127,
-				27, java.awt.Image.SCALE_SMOOTH)))));
+		bgColorCancel = new JButton(new ImageIcon(((new ImageIcon("IMG/button_cancel passive.png").getImage()
+				.getScaledInstance(127, 27, java.awt.Image.SCALE_SMOOTH)))));
 		ImageIcon CancelImg = new ImageIcon("IMG/button_cancel passive.png");
 		ImageIcon CancelRImg = new ImageIcon("IMG/button_cancel rollover.png");
 		bgColorCancel.setRolloverIcon(CancelRImg);
 		bgColorCancel.setIcon(CancelImg);
 		bgColorCancel.setDisabledIcon(CancelImg);
 		bgColorCancel.setToolTipText("Cancel adding link");
-		//bgColorCancel.setBounds(0, 0, 127, 27);
+		// bgColorCancel.setBounds(0, 0, 127, 27);
 		bgColorCancel.addActionListener(lforbuttons);
 		bannerPanelButtons.add(bgColorCancel, BorderLayout.WEST);
 		bgColorCancel.setOpaque(true);
@@ -66,7 +65,7 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 
 		bgColorSave = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/save.png").getImage().getScaledInstance(127, 27, java.awt.Image.SCALE_SMOOTH)))));
-		//bgColorSave.setBounds(0, 0, 127, 27);
+		// bgColorSave.setBounds(0, 0, 127, 27);
 		ImageIcon FooterSaveImg = new ImageIcon("IMG/save.png");
 		ImageIcon FooterSaveRImg = new ImageIcon("IMG/RSave.png");
 		bgColorSave.setIcon(FooterSaveImg);
@@ -98,7 +97,7 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 	public void stateChanged(ChangeEvent e) {
 		newColor = tcc.getColor();
 		banner.setBackground(newColor);
-		StringColor = String.format("#%02x%02x%02x", newColor.getRed(),newColor.getGreen(),newColor.getBlue());
+		StringColor = String.format("#%02x%02x%02x", newColor.getRed(), newColor.getGreen(), newColor.getBlue());
 	}
 
 	/**
@@ -118,6 +117,7 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 		bgframe.setContentPane(newContentPane);
 		bgframe.pack();
 		bgframe.setVisible(true);
+		bgframe.setAlwaysOnTop(true);
 
 	}
 
@@ -125,7 +125,7 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 
 		@SuppressWarnings("unused")
 		public void actionPerformed(ActionEvent e) {
-			
+
 			if (e.getSource() == bgColorSave) {
 				bgframe.setVisible(false);
 				TextArea ArrayDisplay = Init.getArrayDisplay();
@@ -133,21 +133,21 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 				String test = tagArray.get(tagArray.size() - 1);
 				JButton bgColorButton = Init.getBgColorButton();
 				JButton titleButton = Init.getTitleButton();
-				ArrayList<String> buttonHitList = Init.getButtonHitList();
 				JLabel tutBanner = Init.getTutBanner();
-				
-				
-				tagArray.add(3, "<style> body {background-color:" + StringColor +";} </style>");
-				ArrayDisplay.append("\n<style> body {background-color:" + StringColor +";} </style>");
+
+				tagArray.add(3, "<style> body {background-color:" + StringColor + ";} </style>");
+				ArrayDisplay.append("\n<style> body {background-color:" + StringColor + ";} </style>");
 				bgColorButton.setVisible(false);
 				titleButton.setVisible(true);
 				titleButton.setEnabled(true);
 				ImageIcon tutBanImg = new ImageIcon("IMG/pg-4-tag-title-png.png");
 				tutBanner.setIcon(tutBanImg);
-				
-				}
+
+			}
 			if (e.getSource() == bgColorCancel) {
+				JButton bgColorButton = Init.getBgColorButton();
 				bgframe.setVisible(false);
+				bgColorButton.setEnabled(true);
 			}
 
 		}

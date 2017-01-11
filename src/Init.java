@@ -47,7 +47,6 @@ public class Init extends JFrame {
 	static JFrame frmWebgetLink;
 	JFrame frmWebgetImg;
 	JFrame frmWebgetList;
-	JFrame bgframe;
 	JMenuItem menuFinalize, ResetPage;
 	static JMenuItem CSSStyling;
 	static JButton HTMLButton;
@@ -110,10 +109,7 @@ public class Init extends JFrame {
 	static int totTextDif;
 	// this arrayList writes the final document all text and tags are added
 	static ArrayList<String> tagArray = new ArrayList<>();
-	// this arrayList keeps track of button hit for the undo method 
-	static ArrayList<String> buttonHitList = new ArrayList<>();
-	
-	
+
 	public static JLabel getTutBanner() {
 		return tutBanner;
 	}
@@ -122,15 +118,6 @@ public class Init extends JFrame {
 		Init.tutBanner = tutBanner;
 	}
 
-	public static ArrayList<String> getButtonHitList() {
-		return buttonHitList;
-	}
-
-	public static void setButtonHitList(ArrayList<String> buttonHitList) {
-		Init.buttonHitList = buttonHitList;
-	}
-
-	
 	public static JButton getTitleButton() {
 		return TitleButton;
 	}
@@ -200,7 +187,7 @@ public class Init extends JFrame {
 		String userLi6 = Li6.getText();
 		liNumVal = liNum.getSelectedItem().toString();
 		totTextBefore = ArrayDisplay.getText().length();
-				
+
 		if (liNumVal == "1") {
 			tagArray.add("<ol><li>" + userLi1 + "</li></ol>");
 			ArrayDisplay.append("\n <ol> \n <li>" + "\n" + userLi1 + "\n</li>\n</ol>");
@@ -365,6 +352,7 @@ public class Init extends JFrame {
 			ArrayDisplay.setText("Page in Progress...");
 			HTMLButton.setVisible(true);
 			HeadButton.setVisible(true);
+			bgColorButton.setEnabled(true);
 			BodyButton.setVisible(true);
 			FooterButton.setVisible(true);
 			HTMLButton.setEnabled(true);
@@ -398,9 +386,7 @@ public class Init extends JFrame {
 			if (frmWebgetList.isVisible()) {
 				frmWebgetList.setVisible(false);
 			}
-			if (bgframe.isVisible()) {
-				bgframe.setVisible(false);
-			}
+			
 		} else if (n == JOptionPane.NO_OPTION) {
 
 		} else {
@@ -1155,8 +1141,8 @@ public class Init extends JFrame {
 		listButton.addActionListener(lforbuttons);
 		listButton.setRolloverIcon(ListRImg);
 
-		bgColorButton = new JButton(new ImageIcon(
-				((new ImageIcon("IMG/button_background next.png").getImage().getScaledInstance(127, 27, java.awt.Image.SCALE_SMOOTH)))));
+		bgColorButton = new JButton(new ImageIcon(((new ImageIcon("IMG/button_background next.png").getImage()
+				.getScaledInstance(127, 27, java.awt.Image.SCALE_SMOOTH)))));
 		bgColorButton.setOpaque(false);
 		bgColorButton.setBorderPainted(false);
 		bgColorButton.setToolTipText("Adds a uniform background color to the webpage");
@@ -1164,9 +1150,9 @@ public class Init extends JFrame {
 		frmWebPageBasics.getContentPane().add(bgColorButton);
 		bgColorButton.setVisible(false);
 		bgColorButton.addActionListener(lforbuttons);
-		 ImageIcon bgImg = new ImageIcon("IMG/button_background passive.png");
-		 ImageIcon bgRImg = new ImageIcon("IMG/button_background rollover.png");
-		 ImageIcon bgNImg = new ImageIcon("IMG/button_background next.png");
+		ImageIcon bgImg = new ImageIcon("IMG/button_background passive.png");
+		ImageIcon bgRImg = new ImageIcon("IMG/button_background rollover.png");
+		ImageIcon bgNImg = new ImageIcon("IMG/button_background next.png");
 		bgColorButton.setIcon(bgNImg);
 		bgColorButton.setDisabledIcon(bgImg);
 		bgColorButton.setRolloverIcon(bgRImg);
@@ -1181,10 +1167,10 @@ public class Init extends JFrame {
 		MainMenu.add(mnNewMenu);
 
 		UndoButton = new JMenuItem("Undo Last Action");
-		mnNewMenu.add(UndoButton);
+		//mnNewMenu.add(UndoButton);
 		UndoButton.setEnabled(false);
 		UndoButton.addActionListener(lforbuttons);
-		
+
 		ResetPage = new JMenuItem("Reset Page");
 		mnNewMenu.add(ResetPage);
 		ResetPage.addActionListener(lforbuttons);
@@ -1243,10 +1229,7 @@ public class Init extends JFrame {
 		frmWebgetList.getContentPane().setLayout(null);
 		frmWebgetList.setVisible(false);
 
-		bgframe = new JFrame("Choosing Background Color");
-		bgframe.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frmWebgetList.setResizable(false);
-		frmWebgetList.setVisible(false);
+
 	}
 
 	/**
@@ -1271,15 +1254,15 @@ public class Init extends JFrame {
 							.format("Please finish your page before you attempt to create it!", e.getActionCommand()));
 				}
 			}
-/*			if (e.getSource() == CSSStyling) {
-				HTMLButton.setVisible(false);
-				HeadButton.setVisible(false);
-				BodyButton.setVisible(false);
-				FooterButton.setVisible(false);
-				bgColorButton.setVisible(true);
-			}*/
+			/*
+			 * if (e.getSource() == CSSStyling) { HTMLButton.setVisible(false);
+			 * HeadButton.setVisible(false); BodyButton.setVisible(false);
+			 * FooterButton.setVisible(false); bgColorButton.setVisible(true); }
+			 */
 			if (e.getSource() == bgColorButton) {
+				
 				ColorChooserWindowbg colorchoice = new ColorChooserWindowbg();
+				bgColorButton.setEnabled(false);
 				colorchoice.createAndShowGUI();
 
 			}
@@ -1351,11 +1334,12 @@ public class Init extends JFrame {
 				resetPage();
 			}
 			if (e.getSource() == imgButton) {
+				if (frmWebgetImg.isVisible()) {
+					frmWebgetImg.setVisible(false);
+				}
 				getImage(tagArray);
-
 			}
 			if (e.getSource() == linkCancel) {
-
 				frmWebgetLink.setVisible(false);
 				linkAddy.setText("");
 				linkName.setText("");
@@ -1364,9 +1348,15 @@ public class Init extends JFrame {
 				LinkAddL linkaddl = LinkAddL.execute();
 			}
 			if (e.getSource() == linkButton) {
+				if (frmWebgetLink.isVisible()) {
+					frmWebgetLink.setVisible(false);
+				}
 				getLink(tagArray);
 			}
 			if (e.getSource() == listButton) {
+				if (frmWebgetList.isVisible()) {
+					frmWebgetList.setVisible(false);
+				}
 				getList(tagArray);
 			}
 			if (e.getSource() == listSave) {

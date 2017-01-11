@@ -16,7 +16,7 @@ public class HTMLButtonL extends Init {
 		tutBanner.setIcon(tutBanImg);
 		ImageIcon HeadNImg = new ImageIcon("IMG/Nhead.png");
 		HeadButton.setIcon(HeadNImg);
-		UndoButton.setEnabled(true);
+		//UndoButton.setEnabled(true);
 		return null;
 	}
 }
