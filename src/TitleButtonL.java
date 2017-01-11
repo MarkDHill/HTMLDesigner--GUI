@@ -2,6 +2,10 @@ import javax.swing.ImageIcon;
 
 public class TitleButtonL extends Init {
 
+	/**
+	 * Adds title tag to page. further logic performed by TitleSaveButtonL
+	 */
+	
 	public static TitleButtonL execute() {
 		tagArray.add("<TITLE>");
 		ArrayDisplay.append("\n" + "<title>");

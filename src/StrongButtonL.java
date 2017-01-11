@@ -1,6 +1,10 @@
 
 public class StrongButtonL extends Init {
 
+	/**
+	 * Adds Strong tag to array/page
+	 */
+	
 	public static StrongButtonL execute() {
 		ArrayDisplay.append("\n" + "<strong>");
 		tagArray.add("<strong>");

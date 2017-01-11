@@ -1,6 +1,10 @@
 
 public class H1ButtonL extends Init {
 
+	/**
+	 * General header HTML tag logic extracted from initialize
+	 */
+	
 	public static H1ButtonL execute() {
 		ArrayDisplay.append("\n" + "<h1>");
 		tagArray.add("<h1>");

@@ -1,16 +1,7 @@
-import java.awt.Desktop;
 import java.awt.EventQueue;
 import javax.swing.*;
-import java.awt.TextArea;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
-import java.awt.Component;
-import java.awt.SystemColor;
-import java.awt.Font;
+
+
 
 @SuppressWarnings("serial")
 public class HTMLDesignerApp extends JFrame {
@@ -19,7 +10,10 @@ public class HTMLDesignerApp extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 * Passes to Init (initialize)
+	*/
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

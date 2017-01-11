@@ -1,6 +1,9 @@
 
 public class EMButtonL extends Init {
 
+	/**
+	 * EM button logic pulled from initialize
+	 */
 	public static EMButtonL execute() {
 		ArrayDisplay.append("\n" + "<em>");
 		tagArray.add("<em>");

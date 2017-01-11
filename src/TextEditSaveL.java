@@ -1,6 +1,11 @@
 
 public class TextEditSaveL extends Init{
 
+	
+	/**
+	 * Saves a multitude of text edits. Checks if inside paragraph and finishes paragraph if so.
+	 */
+	
 	public static TextEditSaveL execute() {
 		
 		String userInput = MultiLineEntry.getText();
@@ -18,6 +23,7 @@ public class TextEditSaveL extends Init{
 		DummySaveButton.setVisible(true);
 		textEditTrue();
 		String findpTag = tagArray.get(tagArray.size() - 4);
+		// are we inside a paragraph
 		if (findpTag.equalsIgnoreCase("<p>")) {
 			ArrayDisplay.append("\n</p>");
 			tagArray.add("</p>");

@@ -5,6 +5,12 @@ import javax.swing.ImageIcon;
 
 public class UndoButtonL extends Init {
 
+	/**
+	 * Attempts to backtrack through both array and the text field on GUI showing array. 
+	 * USE JLIST INSTEAD MUCH SIMPLER! or 
+	 * Change to command design pattern for much simpler "undo" function
+	 */
+	
 	public static UndoButtonL execute() {
 
 		ArrayList<String> tagArray = Init.getTagArray();

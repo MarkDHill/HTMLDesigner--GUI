@@ -2,6 +2,11 @@ import javax.swing.ImageIcon;
 
 public class BodyButtonL extends Init {
 
+	
+	/**
+	 * Body button logic, can be reset with reset page class/menu option
+	 */
+	
 	public static BodyButtonL execute() {
 		tagArray.add("<body>");
 		ArrayDisplay.append("\n" + "<body>");

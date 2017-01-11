@@ -107,9 +107,12 @@ public class Init extends JFrame {
 	static int totTextBefore;
 	static int totTextAfter;
 	static int totTextDif;
+	
 	// this arrayList writes the final document all text and tags are added
 	static ArrayList<String> tagArray = new ArrayList<>();
 
+	
+	// getters and setters needed for manipulation in extracted classes
 	public static JLabel getTutBanner() {
 		return tutBanner;
 	}
@@ -151,7 +154,8 @@ public class Init extends JFrame {
 	}
 
 	static void textEditTrue() {
-
+		// sets visible all the basic text edit buttons
+		// often repeated code extracted for simplicity
 		h1Button.setVisible(true);
 		h2Button.setVisible(true);
 		h3Button.setVisible(true);
@@ -165,6 +169,8 @@ public class Init extends JFrame {
 	}
 
 	static void textEditFalse() {
+		// sets not visible all the basic text edit buttons
+		// often repeated code extracted for simplicity
 		h1Button.setVisible(false);
 		h2Button.setVisible(false);
 		h3Button.setVisible(false);
@@ -178,16 +184,17 @@ public class Init extends JFrame {
 	}
 
 	void orderedListSave() {
-
+		// saves an ordered list, accepting up to 6 user inputs
 		String userLi1 = Li1.getText();
 		String userLi2 = Li2.getText();
 		String userLi3 = Li3.getText();
 		String userLi4 = Li4.getText();
 		String userLi5 = Li5.getText();
 		String userLi6 = Li6.getText();
+		/*checks length of textdisplay before/after list
 		liNumVal = liNum.getSelectedItem().toString();
 		totTextBefore = ArrayDisplay.getText().length();
-
+		  */
 		if (liNumVal == "1") {
 			tagArray.add("<ol><li>" + userLi1 + "</li></ol>");
 			ArrayDisplay.append("\n <ol> \n <li>" + "\n" + userLi1 + "\n</li>\n</ol>");
@@ -222,8 +229,9 @@ public class Init extends JFrame {
 					+ "\n</li>\n<li>\n" + userLi3 + "\n</li>\n<li>\n" + userLi4 + "\n</li>\n<li>\n" + userLi5
 					+ "\n</li>\n<li>\n" + userLi6 + "\n</li>\n</ol>");
 		}
+		/*checks length of textdisplay before/after list
 		totTextAfter = ArrayDisplay.getText().length();
-		totTextDif = (totTextAfter - totTextBefore);
+		totTextDif = (totTextAfter - totTextBefore);*/
 	}
 
 	void unOrderedListSave() {
@@ -233,8 +241,10 @@ public class Init extends JFrame {
 		String userLi4 = Li4.getText();
 		String userLi5 = Li5.getText();
 		String userLi6 = Li6.getText();
+		/*checks length of textdisplay before/after list
 		liNumVal = liNum.getSelectedItem().toString();
 		totTextBefore = ArrayDisplay.getText().length();
+		*/
 		if (liNumVal == "1") {
 			tagArray.add("<ul><li>" + userLi1 + "</li></ul>");
 			ArrayDisplay.append("\n <ul> \n <li>" + "\n" + userLi1 + "\n</li>\n</ul>");
@@ -269,14 +279,17 @@ public class Init extends JFrame {
 					+ "\n</li>\n<li>\n" + userLi3 + "\n</li>\n<li>\n" + userLi4 + "\n</li>\n<li>\n" + userLi5
 					+ "\n</li>\n<li>\n" + userLi6 + "\n</li>\n</ul>");
 		}
+		/*checks length of textdisplay before/after list
 		totTextAfter = ArrayDisplay.getText().length();
 		totTextDif = (totTextAfter - totTextBefore);
+		*/
 	}
 
 	void finishPage() {
 
 		String decodedPath = null;
 
+		// get path of where the program is ran from. should be usable regardless of operating system and special char
 		String path = HTMLDesignerApp.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		try {
 			decodedPath = URLDecoder.decode(path, "UTF-8");
@@ -285,6 +298,7 @@ public class Init extends JFrame {
 		}
 
 		String getProperty = System.getProperty("java.class.path");
+		// lock save directory to location of where the program is ran from so that image links are not broken
 		final File dirToLock = new File(getProperty + decodedPath);
 		JFileChooser fc = new JFileChooser(dirToLock);
 		fc.setFileView(new FileView() {
@@ -298,17 +312,20 @@ public class Init extends JFrame {
 
 			FileWriter writer = null;
 			try {
+				// for save the file as an .html file
 				writer = new FileWriter(fc.getSelectedFile() + ".html");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			// use string builder to rebuild string into proper format so we can auto open in browser later
 			String SavedF = (fc.getSelectedFile() + "html");
 			StringBuilder sb = new StringBuilder(SavedF);
 			sb.setLength(sb.length() - 4);
 			sb.append(".html");
 			String sbSavedF = sb.toString();
 			File filesb = new File(sbSavedF);
+			// write text file from array
 			for (String str : tagArray) {
 				try {
 					writer.write(str);
@@ -324,6 +341,7 @@ public class Init extends JFrame {
 				e.printStackTrace();
 			}
 			try {
+				// auto open newly created .html file in default browser
 				Desktop.getDesktop().browse(filesb.toURI());
 
 			} catch (IOException e) {
@@ -341,6 +359,7 @@ public class Init extends JFrame {
 		Component temporaryLostComponent = null;
 		int n = JOptionPane.showConfirmDialog(temporaryLostComponent, "Would you like to reset your current page?",
 				"ALERT", JOptionPane.YES_NO_OPTION);
+		// loop to empty array holding tag and text
 		if (n == JOptionPane.YES_OPTION) {
 			if (!tagArray.isEmpty()) {
 				for (int i = 0; i < tagArray.size(); i++) {
@@ -348,6 +367,7 @@ public class Init extends JFrame {
 				}
 			}
 
+		// reset page back to beginning of tutorial
 			textEditFalse();
 			ArrayDisplay.setText("Page in Progress...");
 			HTMLButton.setVisible(true);
@@ -400,6 +420,8 @@ public class Init extends JFrame {
 
 		ListenForButton lforbuttons = new ListenForButton();
 
+		// creates new Jframe with compontents
+		
 		frmWebgetLink = new JFrame();
 		frmWebgetLink.setResizable(false);
 		frmWebgetLink.getContentPane().setBackground(SystemColor.activeCaptionBorder);
@@ -451,7 +473,7 @@ public class Init extends JFrame {
 		frmWebgetLink.getContentPane().add(linkCancel);
 		linkCancel.addActionListener(lforbuttons);
 
-		/*
+		/*	not needed after full page graphic used instead
 		 * JLabel sBar = new JLabel(new ImageIcon( ((new
 		 * ImageIcon("IMG/sBar.png").getImage().getScaledInstance(380, 5,
 		 * java.awt.Image.SCALE_SMOOTH))))); sBar.setBounds(5, 360, 380, 5);
@@ -473,6 +495,8 @@ public class Init extends JFrame {
 
 		ListenForButton lforbuttons = new ListenForButton();
 
+		// creates new jframe with components
+		
 		frmWebgetList = new JFrame();
 		frmWebgetList.setResizable(false);
 		frmWebgetList.getContentPane().setBackground(SystemColor.activeCaptionBorder);
@@ -581,6 +605,7 @@ public class Init extends JFrame {
 		liNum.setBounds(243, 105, 99, 20);
 		frmWebgetList.getContentPane().add(liNum);
 
+		// populate dropdown with choices for number of list items
 		liNum.addItem("1");
 		liNum.addItem("2");
 		liNum.addItem("3");
@@ -640,6 +665,8 @@ public class Init extends JFrame {
 
 		ListenForButton lforbuttons = new ListenForButton();
 
+		// creates jframe and components
+		
 		frmWebgetImg = new JFrame();
 		frmWebgetImg.setResizable(false);
 		frmWebgetImg.getContentPane().setBackground(SystemColor.activeCaptionBorder);
@@ -753,12 +780,17 @@ public class Init extends JFrame {
 	}
 
 	public void initialize(HTMLDesignerApp inputhtmld) {
-
+		// initialization could be a lot cleaner. no need to pass the initial class into init
+		
 		ListenForButton lforbuttons = new ListenForButton();
+		// initializes all jframes to prevent null exception on page resets
 		initJFrames();
+		// initializes all initial jframes menu items
 		initMenu(lforbuttons);
+		// initializes all initial jframes button items
 		initButtons(lforbuttons);
 
+		// graphic display of array
 		ArrayDisplay = new TextArea();
 		ArrayDisplay.setBackground(SystemColor.scrollbar);
 		ArrayDisplay.setEditable(false);
@@ -766,25 +798,12 @@ public class Init extends JFrame {
 		ArrayDisplay.setBounds(991, 32, 153, 680);
 		frmWebPageBasics.getContentPane().add(ArrayDisplay);
 
-		tutBanner = new JLabel("Dev note- Import blue screen of death for funsies");
+		// initializes the tutorial section of the GUI
+		tutBanner = new JLabel("Tutorial Image Missing.");
 		tutBanner.setBounds(10, 32, 332, 680);
 		frmWebPageBasics.getContentPane().add(tutBanner);
 		ImageIcon tutBanImg = new ImageIcon("IMG/pg-1-welcome png.png");
 		tutBanner.setIcon(tutBanImg);
-
-		TutConsole = new JTextArea();
-		TutConsole.setWrapStyleWord(true);
-		TutConsole.setLineWrap(true);
-		TutConsole.setFont(new Font("Dialog", Font.PLAIN, 14));
-		TutConsole.setBackground(SystemColor.scrollbar);
-		TutConsole.setEditable(false);
-		TutConsole.setText(
-				"\r\n\r\n\r\n Welcome to your introduction to Web Page Basics tutorial! When you're ready to get started on your web page, please click the HTML button. This will add an <html> tag to your page,"
-						+ " which you will be able to view in the panel on the right side of your screen. It will also add a document type declaration: <!DOCTYPE html>, which is a required component for all HTML documents.\n"
-						+ "\nThe HTML document itself begins with the <html> tag, and will end with the closing tag </html>."
-						+ "\n\nTo CONTINUE, please click the HTML button and start your web page!");
-		TutConsole.setBounds(10, 32, 332, 680);
-		// frmWebPageBasics.getContentPane().add(TutConsole);
 
 		MultiLineEntry = new TextArea();
 		MultiLineEntry.setBackground(UIManager.getColor("CheckBox.light"));
@@ -807,7 +826,10 @@ public class Init extends JFrame {
 		botLab.setIcon(botLabImg);
 	}
 
+	
 	private void initButtons(ListenForButton lforbuttons) {
+		// initializes all of the initial JFrames buttons
+		
 		HTMLButton = new JButton(new ImageIcon(
 				((new ImageIcon("IMG/html.png").getImage().getScaledInstance(127, 27, java.awt.Image.SCALE_SMOOTH)))));
 		HTMLButton.setOpaque(false);
@@ -1159,6 +1181,8 @@ public class Init extends JFrame {
 	}
 
 	private void initMenu(ListenForButton lforbuttons) {
+		
+		// initializes initial JFrames menu items
 		JMenuBar MainMenu = new JMenuBar();
 		MainMenu.setBounds(0, 0, 1134, 21);
 		frmWebPageBasics.getContentPane().add(MainMenu);
@@ -1182,7 +1206,7 @@ public class Init extends JFrame {
 		mnFinish.add(menuFinalize);
 		menuFinalize.addActionListener(lforbuttons);
 
-		/*
+		/*	
 		 * JMenu mnNewMenu_1 = new JMenu("Advanced");
 		 * mnNewMenu_1.setActionCommand(""); MainMenu.add(mnNewMenu_1);
 		 * 
@@ -1193,6 +1217,8 @@ public class Init extends JFrame {
 	}
 
 	private void initJFrames() {
+		
+		// Initialize all JFrames to prevent null exception on reset page
 		frmWebPageBasics = new JFrame();
 		frmWebPageBasics.setResizable(false);
 		frmWebPageBasics.getContentPane().setBackground(SystemColor.activeCaptionBorder);

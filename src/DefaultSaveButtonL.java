@@ -1,6 +1,9 @@
 
 public class DefaultSaveButtonL extends Init{
 
+	/**
+	 * Save button logic pulled from initialize.
+	 */
 	
 	public static DefaultSaveButtonL execute() {
 		String userInput = MultiLineEntry.getText();

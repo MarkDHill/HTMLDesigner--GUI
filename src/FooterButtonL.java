@@ -2,6 +2,11 @@ import javax.swing.ImageIcon;
 
 public class FooterButtonL extends Init {
 
+	
+	/**
+	 * Footer button logic. Ends main content portion of array.
+	 */
+	
 	public static FooterButtonL execute() {
 		
 		tagArray.add("</body>");

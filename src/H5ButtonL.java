@@ -1,6 +1,9 @@
 
 public class H5ButtonL extends Init {
 
+	/**
+	 * General header HTML tag logic extracted from initialize
+	 */
 	
 	public static H5ButtonL execute() {
 		

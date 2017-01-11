@@ -23,6 +23,11 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 	public ColorChooserWindowbg() {
 		super(new BorderLayout());
 
+		/**
+		 * Creates and sets the panels on the color chooser window
+		 * Default panels are passed into an array then removed to simplify the window
+		 */
+		
 		// Set up the banner at the top of the window
 		banner = new JLabel("", JLabel.CENTER);
 		banner.setForeground(Color.yellow);
@@ -77,6 +82,8 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 		bgColorSave.setBorderPainted(false);
 		bannerPanelButtons.add(bgColorSave, BorderLayout.EAST);
 
+		
+		// remove panels considered to be confusing for new users per testers recommendations
 		AbstractColorChooserPanel[] panels = tcc.getChooserPanels();
 		for (AbstractColorChooserPanel accp : panels) {
 			if (accp.getDisplayName().equals("HSV")) {
@@ -113,7 +120,7 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 		// Create and set up the content pane.
 		JComponent newContentPane = new ColorChooserWindowbg();
 
-		newContentPane.setOpaque(true); // content panes must be opaque
+		newContentPane.setOpaque(true); 
 		bgframe.setContentPane(newContentPane);
 		bgframe.pack();
 		bgframe.setVisible(true);
@@ -126,6 +133,9 @@ public class ColorChooserWindowbg extends JPanel implements ChangeListener {
 		@SuppressWarnings("unused")
 		public void actionPerformed(ActionEvent e) {
 
+			/**
+			 * Functionality for the save/cancel buttons on the color chooser panel.
+			 */
 			if (e.getSource() == bgColorSave) {
 				bgframe.setVisible(false);
 				TextArea ArrayDisplay = Init.getArrayDisplay();

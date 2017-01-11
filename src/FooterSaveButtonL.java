@@ -5,6 +5,11 @@ public class FooterSaveButtonL extends Init {
 	
 	public static FooterSaveButtonL execute () {
 		
+		
+		/**
+		 * Save button after adding footer. This button sets up the page to be finished/finalized and ends the tutorial.
+		 */
+		
 		String userInput = MultiLineEntry.getText();
 		ArrayDisplay.append("\n" + userInput);
 		ArrayDisplay.append("\n" + "</footer>");

@@ -2,6 +2,10 @@ import javax.swing.JOptionPane;
 
 public class LinkAddL extends Init {
 
+	/**
+	 * Checks if user left a field blank on add links JFrame otherwise adds link info to array.
+	 */
+	
 	public static LinkAddL execute() {
 		String userLinkAddy = linkAddy.getText();
 		String userLinkName = linkName.getText();

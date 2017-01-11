@@ -2,7 +2,10 @@ import javax.swing.ImageIcon;
 
 public class HTMLButtonL extends Init {
 
-
+	/**
+	 * Starts the array storing all of the html tags and starts tutorial via GUI
+	 */
+	
 		public static HTMLButtonL execute() {
 		 
 		

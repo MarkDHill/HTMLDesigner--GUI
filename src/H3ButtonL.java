@@ -1,6 +1,10 @@
 
 public class H3ButtonL extends Init {
 
+	/**
+	 * General header HTML tag logic extracted from initialize
+	 */
+	
 	public static H3ButtonL execute() {
 	ArrayDisplay.append("\n" + "<h3>");
 	tagArray.add("<h3>");
